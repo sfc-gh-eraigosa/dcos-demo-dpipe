@@ -1,16 +1,47 @@
 # Introduction
 
-This is a simple demo for learning DC/OS installation and setup on local laptop.
+This is a simple demo for learning DC/OS custom installation and setup on local laptop.
 
-If your looking for a more complex demo, checkout : https://github.com/dcos/dcos-vagrant.git
+If your looking for a more complex demo, checkout these projects :
+- https://github.com/dcos/dcos-vagrant.git
+- https://github.com/dcos/demos
 
-# How to prepare
+## Requirements
 
-1. (optional) trying to go passwordless?  Visit [these instructions](https://github.com/devopsgroup-io/vagrant-hostmanager#passwordless-sudo)
-1. generate some keys if you havn't done that yet: `cd keys && ./genkeys.sh && cd ..`
-1. run vagrant up!  `vagrant up`
+1. You'll need [vagrant (recommend 1.9.4)](https://www.vagrantup.com/).
+2. Install [docker-machine to build the demo app](https://github.com/docker/machine/releases/tag/v0.11.0).  We'll be using the virtualbox driver to get a local docker client.
+3. You'll need a current docker client:  https://github.com/moby/moby/releases/tag/v1.13.1
+3. A system with about ~12G of RAM, and 4 Cores.  This demo was built on macOS 10.12.3.  SSD drive is highly desirable.  An internet connection with 10 mBits / sec or better.
 
-# How to use
+## How to prepare
+
+1. (optional) trying to go passwordless?  Visit [these instructions](https://github.com/devopsgroup-io/vagrant-hostmanager#passwordless-sudo) or run these steps:
+   ```
+   curl -o /tmp/passwordless.sh \
+        --url 'https://raw.githubusercontent.com/dcos/dcos-vagrant/master/ci/passwordless.sh' && \
+        sudo bash /tmp/passwordless.sh ; \
+        rm -f /tmp/passwordless
+   ```
+1. generate some keys if you haven't done that yet, we'll need those in the keys directory:
+   ```
+   cd keys && ./genkeys.sh && cd ..
+   ```
+   NOTE: These keys can not be encrypted, as the DC/OS installation will be using them for an unattended installation.
+1. run vagrant up!  `vagrant up` in the root directory of this project.
+
+## What does this project do?
+
+- This project will setup 4 nodes for learning how to deploy DC/OS. 1 bootstrap, 1 master, 1 public agent, and 1 private agent. Further we will deploy a sample data pipeline.
+
+The goals are simple.  Learn how to [deploy DC/OS](https://dcos.io/docs/1.9/installing/custom/) and manage a simple data pipeline.
+
+- We install docker only on the bootstrap node.
+- We configure an ssh key in the keys folder to allow for an ssh based deployment.
+- We install minimal packages on all nodes.
+- We generate the basic configuration file from the [genconf/config.yaml](genconf/config.yaml)
+- Finally we provide a data pipeline [demo](demo/README.md).
+
+## How to use
 
 This is a manual install so we only prepared the minimum setup so that you can experience the steps for master and agents.
 
@@ -19,15 +50,17 @@ This is a manual install so we only prepared the minimum setup so that you can e
 3. Install all the node pre-reqs:  `sudo bash ./dcos_generate_config.sh --install-prereqs -v`
 4. Verify we can install with pre-flights: `sudo bash ./dcos_generate_config.sh --preflight -v`
 4. Deploy DC/OS: `sudo bash ./dcos_generate_config.sh --deploy -v`
-5. Verify install is good with post-flights: `bash dcos_generate_config.sh --postflight -v`
+5. Verify install is good with post-flights: `sudo bash dcos_generate_config.sh --postflight -v`
 
-# Trouble shoot
+Once all these steps are complete, tryin accessing the DC/OS environment with a local browser at the following URL: ***[http://m1.dcos-demo](http://m1.dcos-demo)***
 
-We can start with [this site](https://dcos.io/docs/1.9/installing/troubleshooting/).
+Tweak the Vagrantfile and genconf/config.yaml for other configurations.  For example, 3 masters, 1 agent, 1 public agent.
 
-# A real demo
+## Trouble shoot
+
+We can start with [this site](https://dcos.io/docs/1.9/installing/troubleshooting/), however lets provide some [specific help with the vagrant VMs](docs/TROUBLESHOOTING.md).
+
+## A real demo
 Now lets do a [real demo](demo/README.md)!
 
 # TODO cleanups
-* Vagrantfile should be configurable for multinode setups
-* make the ip assignment dynamic

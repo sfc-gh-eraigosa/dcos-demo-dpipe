@@ -78,6 +78,13 @@ Vagrant.configure(2) do |config|
     config.vm.box = defaultbox
     config.vm.hostname = "m1.#{dcosname}"
     config.vm.network "private_network", ip: "192.168.0.3"
+     # open these ports:  80, 443, 8080, 8181, 2181, 5050
+    config.vm.network "forwarded_port", guest: 8080, host: 8080
+    config.vm.network "forwarded_port", guest: 8181, host: 8181
+    config.vm.network "forwarded_port", guest: 5050, host: 5050
+    config.vm.network "forwarded_port", guest: 2181, host: 2181
+    config.vm.network "forwarded_port", guest: 443, host: 443
+    config.vm.network "forwarded_port", guest: 80, host: 80
     config.vm.provider "virtualbox" do |vb|
          vb.name = "#{config.vm.hostname}"
          vb.memory = "4096"

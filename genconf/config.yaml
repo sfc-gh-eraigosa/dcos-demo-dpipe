@@ -1,6 +1,4 @@
 ---
-agent_list:
-  - 192.168.0.5
 # Use this bootstrap_url value unless you have moved the DC/OS installer assets.
 bootstrap_url: file:///opt/dcos_install_tmp
 cluster_name: 'dcos-demo'
@@ -10,6 +8,8 @@ master_list:
   - 192.168.0.3
 public_agent_list:
   - 192.168.0.4
+agent_list:
+  - 192.168.0.5
 resolvers:
   - 8.8.4.4
   - 8.8.8.8
@@ -17,11 +17,14 @@ ssh_port: 22
 ssh_user: vagrant
 use_proxy: 'false'
 process_timeout: 600
-ip_detect_filename: /opt/dcos_install/genconf/ip-detect
+# ip_detect_filename: /opt/dcos_install/genconf/ip-detect
 oauth_enabled: 'true'
 telemetry_enabled: 'false'
+
+# Setup proxies
+#
+
 #http_proxy: http://<proxy_host>:<http_proxy_port>
 #https_proxy: https://<proxy_host>:<https_proxy_port>
 #no_proxy:
-#- 'foo.bar.com'
-#- '.baz.com'
+#- '.dcose-demo'
