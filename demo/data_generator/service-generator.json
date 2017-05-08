@@ -1,0 +1,17 @@
+{
+    "id": "data-generator",
+    "container": {
+    "type": "DOCKER",
+    "docker": {
+          "image": "wenlock/data_generator:latest",
+          "network": "BRIDGE"
+        }
+    },
+    "acceptedResourceRoles": ["slave_public"],
+    "instances": 1,
+    "cpus": 0.1,
+    "mem": 64,
+    "labels": {
+      "DCOS_SERVICE_NAME": "data-generator"
+    }
+}

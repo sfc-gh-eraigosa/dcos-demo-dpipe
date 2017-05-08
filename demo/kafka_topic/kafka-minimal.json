@@ -1,7 +1,15 @@
 {
+  "service": {
+        "name": "kafka-inst1",
+        "placement_strategy": "NODE"
+    },
     "brokers": {
         "count": 1,
         "mem": 512,
         "disk": 1000
+    },
+    "kafka": {
+        "delete_topic_enable": true,
+        "log_retention_hours": 128
     }
 }

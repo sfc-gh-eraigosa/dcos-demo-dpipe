@@ -5,6 +5,8 @@ our data.
 
 # Building it
 
+We'll deploy a docker container similar to the steps in [these instructions](https://dcos.io/docs/1.9/deploying-services/creating-services/deploy-docker-app/).
+
 1. Lets setup a local docker engine so we can build the images
    ```
    docker-machine create --driver virtualbox \
@@ -19,15 +21,28 @@ our data.
 
 3. Test that the container built ok : `docker run -it --rm data_generator --version`
 
+4. Push the container to hub.docker.com registry so that we can deploy it.
+   ```
+   docker login
+   # specify the user and password for the account
+   docker tag data_generator <youraccount>/data_generator:latest
+   docker push <youraccount>/data_generator:latest
+   ```
+
 To learn more about the fintrans generator, [visit the example here](https://github.com/dcos/demos/blob/master/1.9/fintrans/README.md).
 
 # Running it
 
 Lets deploy this application as a normal container on our DC/OS cluster.
 
-For this step, you'll need a working DC/OS environment and dcos cli.
-If you do not have a cli setup yet, you can do that [here](https://dcos.io/docs/1.9/cli/install/).
+For this step, you'll need a working DC/OS environment and [dcos cli](../../docs/dcoscli.md).
+
 
 1. Export your built container from your docker-machine environment and import it into the DC/OS environment.
 2. Deploy a single container service into DC/OS
+   ```
+   dcos marathon app list
+   dcos marathon app add service-generator.json
+   dcos marathon app list
+   ```
 3. Check the status

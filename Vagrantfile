@@ -106,7 +106,7 @@ Vagrant.configure(2) do |config|
     config.vm.network "private_network", ip: "192.168.0.4"
     config.vm.provider "virtualbox" do |vb|
          vb.name = "#{config.vm.hostname}"
-         vb.memory = "2048"
+         vb.memory = "6072"
          vb.cpus = 2
     end
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
@@ -125,7 +125,7 @@ Vagrant.configure(2) do |config|
     config.vm.network "private_network", ip: "192.168.0.5"
     config.vm.provider "virtualbox" do |vb|
          vb.name = "#{config.vm.hostname}"
-         vb.memory = "2048"
+         vb.memory = "6072"
          vb.cpus = 2
     end
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager

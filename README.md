@@ -11,7 +11,12 @@ If your looking for a more complex demo, checkout these projects :
 1. You'll need [vagrant (recommend 1.9.4)](https://www.vagrantup.com/).
 2. Install [docker-machine to build the demo app](https://github.com/docker/machine/releases/tag/v0.11.0).  We'll be using the virtualbox driver to get a local docker client.
 3. You'll need a current docker client:  https://github.com/moby/moby/releases/tag/v1.13.1
-3. A system with about ~12G of RAM, and 4 Cores.  This demo was built on macOS 10.12.3.  SSD drive is highly desirable.  An internet connection with 10 mBits / sec or better.
+3. A system with about ~17G of RAM, and 7 Cores.  This demo was built on macOS 10.12.3.  SSD drive is highly desirable.  An internet connection with 10 mBits / sec or better.
+
+## Time Estimate
+
+- Allow 30 minutes for vagrant up to complete.
+- Allow 30 minutes for DC/OS deployment steps.
 
 ## How to prepare
 
@@ -28,6 +33,7 @@ If your looking for a more complex demo, checkout these projects :
    ```
    NOTE: These keys can not be encrypted, as the DC/OS installation will be using them for an unattended installation.
 1. run vagrant up!  `vagrant up` in the root directory of this project.
+1. At this point, you might want to take snap shots of all VMs so that you can repeat the DC/OS deployment iteratively with different configurations.
 
 ## What does this project do?
 
@@ -51,8 +57,9 @@ This is a manual install so we only prepared the minimum setup so that you can e
 4. Verify we can install with pre-flights: `sudo bash ./dcos_generate_config.sh --preflight -v`
 4. Deploy DC/OS: `sudo bash ./dcos_generate_config.sh --deploy -v`
 5. Verify install is good with post-flights: `sudo bash dcos_generate_config.sh --postflight -v`
+6. Setup the [dcos client](docs/dcoscli.md).
 
-Once all these steps are complete, tryin accessing the DC/OS environment with a local browser at the following URL: ***[http://m1.dcos-demo](http://m1.dcos-demo)***
+Once all these steps are complete, try accessing the DC/OS environment with a local browser at the following URL: ***[http://m1.dcos-demo](http://m1.dcos-demo)***
 
 Tweak the Vagrantfile and genconf/config.yaml for other configurations.  For example, 3 masters, 1 agent, 1 public agent.
 
@@ -64,3 +71,6 @@ We can start with [this site](https://dcos.io/docs/1.9/installing/troubleshootin
 Now lets do a [real demo](demo/README.md)!
 
 # TODO cleanups
+
+* dig is not working correctly on genconf/ip-detect
+* passwordless script briks the sudoers command on macOS, investigate
