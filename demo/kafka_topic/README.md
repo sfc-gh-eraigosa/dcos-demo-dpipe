@@ -11,3 +11,5 @@ Run the following script to setup:
 ```
 ./install.sh
 ```
+
+![kafka install](images/kafka_install.png)

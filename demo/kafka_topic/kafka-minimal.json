@@ -1,12 +1,12 @@
 {
-  "service": {
-        "name": "kafka-inst1",
-        "placement_strategy": "NODE"
-    },
     "brokers": {
-        "count": 1,
-        "mem": 512,
-        "disk": 1000
+       "cpus": 1,
+       "mem": 512,
+       "heap": {
+         "size": 512
+       },
+       "disk": 1000,
+       "placement-strategy": "ANY"
     },
     "kafka": {
         "delete_topic_enable": true,

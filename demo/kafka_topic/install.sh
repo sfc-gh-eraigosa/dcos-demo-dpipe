@@ -19,4 +19,4 @@ sleep 120
 
 
 # setup topic
-dcos kafka topic create fintrans --partitions 1 --replication 1 --name=kafka-inst1
+dcos kafka topic create fintrans --partitions 1 --replication 1

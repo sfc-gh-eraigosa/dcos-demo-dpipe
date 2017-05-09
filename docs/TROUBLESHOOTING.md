@@ -1,6 +1,6 @@
 # Troubleshooting
 
-## Refrence sites
+## Reference sites
 - https://dcos.io/docs/1.9/installing/troubleshooting/
 
 ## What are the available nodes in this project?
@@ -9,6 +9,12 @@ You can find the viable nodes in the [Vagrantfile](../Vagrantfile), however
 here is a way to get a list:
 ```
 vagrant status
+```
+
+or
+
+```
+dcos node
 ```
 
 You can use those names to connect to specific dcos nodes.
@@ -77,3 +83,15 @@ Validate that `vagrant hostmanager` is able to run properly.  If errors
 1. Exhibitor url : http://m1.dcos-demo:8181/exhibitor/v1/ui/index.html
 2. DC/OS dashboard: http://m1.dcos-demo/
 3.
+
+# clean up kafka and all it's resources
+
+1. remove the kafka service:
+```
+dcos package uninstall kafka
+```
+2. login to the master node and remove all zookeeper resources:
+```
+docker run mesosphere/janitor /janitor.py -r kafka-role -p kafka-principal -z dcos-service-kafka
+```
+Also see [these docs](https://docs.mesosphere.com/1.9/deploying-services/uninstall/#framework-cleaner) for more details
