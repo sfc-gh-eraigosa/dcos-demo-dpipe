@@ -13,14 +13,47 @@ vagrant status
 
 You can use those names to connect to specific dcos nodes.
 
+## Date time might not be correct after snapshot restore
+
+If you restored from a snapshot, it might be necessary to refresh the system time.
+
+```
+sudo systemctl enable ntpd && \
+sudo service ntpd stop && \
+sudo ntpdate -s time.nist.gov && \
+sudo service ntpd start && \
+sudo ntptime && \
+sleep 10 && \
+date && \
+ntpstat
+```
+
+You can validate with dcos-navstar service that things are ok:
+
+```
+ENABLE_CHECK_TIME=true /opt/mesosphere/bin/check-time
+```
+
 ## Login to the master node to check logs
 
 We can login to the master node with the command:
   `vagrant ssh m1.dcos-demo`
 
-From here several logs can be observed:
+From here several logs can be observed.  Use this command to run diagnostics:
+```
+sudo /opt/mesosphere/bin/./3dt -diag
+```
 
-TBD
+Services not started are listed, you can then use commands like the following
+to diagnose those services:
+
+```
+# lets say dcos-navstar.service.service is broken
+/bin/systemctl status dcos-navstar.service
+/bin/systemctl start  dcos-navstar.service
+
+journalctl -xe
+```
 
 ## List all running services on master nodes
 
@@ -43,4 +76,4 @@ Validate that `vagrant hostmanager` is able to run properly.  If errors
 
 1. Exhibitor url : http://m1.dcos-demo:8181/exhibitor/v1/ui/index.html
 2. DC/OS dashboard: http://m1.dcos-demo/
-3. 
+3.
