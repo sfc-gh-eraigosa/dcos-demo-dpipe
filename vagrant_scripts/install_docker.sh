@@ -16,3 +16,5 @@ sudo sed -i 's/^ExecStart=.*/ExecStart=\/usr\/bin\/dockerd \-\-storage\-driver\=
 sudo usermod -a -G docker vagrant && \
 sudo systemctl enable docker && \
 sudo service docker start
+
+echo "--> docker engine install done ..."
