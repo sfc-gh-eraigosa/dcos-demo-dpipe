@@ -107,7 +107,7 @@ Vagrant.configure(2) do |config|
     config.vm.provider "virtualbox" do |vb|
          vb.name = "#{config.vm.hostname}"
          vb.memory = "6072"
-         vb.cpus = 2
+         vb.cpus = 4
     end
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
   # https://jira.mesosphere.com/browse/DCOS_VAGRANT-15
@@ -126,7 +126,7 @@ Vagrant.configure(2) do |config|
     config.vm.provider "virtualbox" do |vb|
          vb.name = "#{config.vm.hostname}"
          vb.memory = "6072"
-         vb.cpus = 2
+         vb.cpus = 4
     end
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
   # https://jira.mesosphere.com/browse/DCOS_VAGRANT-15
