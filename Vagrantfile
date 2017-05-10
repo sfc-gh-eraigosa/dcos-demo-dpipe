@@ -99,14 +99,14 @@ Vagrant.configure(2) do |config|
     config.vm.synced_folder ".", "/vagrant", disabled: true
   end
 
-  # configure public agents
+  # configure private agent 1
   config.vm.define "p1.#{dcosname}" do |config|
     config.vm.box = defaultbox
     config.vm.hostname = "p1.#{dcosname}"
     config.vm.network "private_network", ip: "192.168.0.4"
     config.vm.provider "virtualbox" do |vb|
          vb.name = "#{config.vm.hostname}"
-         vb.memory = "6072"
+         vb.memory = "4096"
          vb.cpus = 4
     end
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
@@ -118,14 +118,14 @@ Vagrant.configure(2) do |config|
     config.vm.synced_folder ".", "/vagrant", disabled: true
   end
 
-  # configure private agents
+  # configure private agent 2
   config.vm.define "p2.#{dcosname}" do |config|
     config.vm.box = defaultbox
     config.vm.hostname = "p2.#{dcosname}"
     config.vm.network "private_network", ip: "192.168.0.5"
     config.vm.provider "virtualbox" do |vb|
          vb.name = "#{config.vm.hostname}"
-         vb.memory = "6072"
+         vb.memory = "4096"
          vb.cpus = 4
     end
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
@@ -137,4 +137,41 @@ Vagrant.configure(2) do |config|
     config.vm.synced_folder ".", "/vagrant", disabled: true
   end
 
+  # configure private agent 3
+  config.vm.define "p3.#{dcosname}" do |config|
+    config.vm.box = defaultbox
+    config.vm.hostname = "p3.#{dcosname}"
+    config.vm.network "private_network", ip: "192.168.0.6"
+    config.vm.provider "virtualbox" do |vb|
+         vb.name = "#{config.vm.hostname}"
+         vb.memory = "4096"
+         vb.cpus = 4
+    end
+  # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
+  # https://jira.mesosphere.com/browse/DCOS_VAGRANT-15
+    config.vm.provision :shell, inline: "sed -i'' '/^127.0.0.1\\t#{config.vm.hostname}\\tp1$/d' /etc/hosts"
+    config.vm.provision "shell", inline: $preconfig_agent
+    config.vm.provision "file", source: "./keys/id_rsa.pub", destination: "~/.ssh/id_rsa.pub"
+    config.vm.provision "shell", path: "vagrant_scripts/setup_min_reqs.sh", privileged: false
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+  end
+
+  # configure public agent 1
+  config.vm.define "a1.#{dcosname}" do |config|
+    config.vm.box = defaultbox
+    config.vm.hostname = "a1.#{dcosname}"
+    config.vm.network "private_network", ip: "192.168.0.7"
+    config.vm.provider "virtualbox" do |vb|
+         vb.name = "#{config.vm.hostname}"
+         vb.memory = "1024"
+         vb.cpus = 1
+    end
+  # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
+  # https://jira.mesosphere.com/browse/DCOS_VAGRANT-15
+    config.vm.provision :shell, inline: "sed -i'' '/^127.0.0.1\\t#{config.vm.hostname}\\tp1$/d' /etc/hosts"
+    config.vm.provision "shell", inline: $preconfig_agent
+    config.vm.provision "file", source: "./keys/id_rsa.pub", destination: "~/.ssh/id_rsa.pub"
+    config.vm.provision "shell", path: "vagrant_scripts/setup_min_reqs.sh", privileged: false
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+  end
 end

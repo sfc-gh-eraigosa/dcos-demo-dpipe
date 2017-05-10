@@ -11,7 +11,7 @@ If your looking for a more complex demo, checkout these projects :
 1. You'll need [vagrant (recommend 1.9.4)](https://www.vagrantup.com/).
 2. Install [docker-machine to build the demo app](https://github.com/docker/machine/releases/tag/v0.11.0).  We'll be using the virtualbox driver to get a local docker client.
 3. You'll need a current docker client:  https://github.com/moby/moby/releases/tag/v1.13.1
-3. A system with about ~15G of RAM, and 7 Cores.  This demo was built on macOS 10.12.3.  SSD drive is highly desirable.  An internet connection with 10 mBits / sec or better.
+3. A system with about ~16G of RAM, and 8 Cores.  This demo was built on macOS 10.12.3.  SSD drive is highly desirable.  An internet connection with 10 mBits / sec or better.
 
 ## Time Estimate
 
@@ -37,7 +37,7 @@ If your looking for a more complex demo, checkout these projects :
 
 ## What does this project do?
 
-- This project will setup 4 nodes for learning how to deploy DC/OS. 1 bootstrap, 1 master and 2 private agents. Further we will deploy a sample data pipeline.
+- This project will setup 7 nodes for learning how to deploy DC/OS. 1 bootstrap, 1 master, 1 public agent and 4 private agents. Further we will deploy a sample data pipeline.
 
 The goals are simple.  Learn how to [deploy DC/OS](https://dcos.io/docs/1.9/installing/custom/) and manage a simple data pipeline.
 
