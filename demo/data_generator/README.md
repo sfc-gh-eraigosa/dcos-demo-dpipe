@@ -37,12 +37,7 @@ Lets deploy this application as a normal container on our DC/OS cluster.
 
 For this step, you'll need a working DC/OS environment and [dcos cli](../../docs/dcoscli.md).
 
-
-1. Export your built container from your docker-machine environment and import it into the DC/OS environment.
-2. Deploy a single container service into DC/OS
+Deploy the container service with DC/OS marathon
    ```
-   dcos marathon app list
-   dcos marathon app add service-generator.json
-   dcos marathon app list
+   ./install.sh
    ```
-3. Check the status
