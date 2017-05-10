@@ -1,16 +1,16 @@
 {
-    "id": "data-generator",
-    "container": {
-    "type": "DOCKER",
-    "docker": {
-          "image": "wenlock/data_generator:latest",
-          "network": "BRIDGE"
-        }
-    },
-    "acceptedResourceRoles": ["slave_public"],
+    "id": "/dpipe/data-generator",
     "instances": 1,
     "cpus": 0.1,
-    "mem": 64,
+    "mem": 32,
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "wenlock/data_generator:latest",
+            "network": "BRIDGE"
+        }
+    },
+    "args": [ "foo" ],
     "labels": {
       "DCOS_SERVICE_NAME": "data-generator"
     }
