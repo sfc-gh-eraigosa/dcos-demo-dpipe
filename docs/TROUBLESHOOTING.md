@@ -60,31 +60,54 @@ to diagnose those services:
 
 journalctl -xe
 ```
+Learn more about navigating logs [here](https://dcos.io/docs/1.8/administration/installing/custom/troubleshooting/#-a-name-component-logs-a-component-logs).
 
 ## List all running services on master nodes
 
 We can list all the running services on the master node with this command:
 
 ```
+dcos service
 ```
 
-# Troubleshooting installing marathon
+## Working a kafka example
 
+If your worried about kafka working, trying doing the kafka example:
 
-# The url m1.dcos-demo doesn't come up in the browser
+https://github.com/dcos/examples/tree/master/kafka/1.9
+
+Connect to the dcos master: `vagrant ssh m1.dcos-demo`
+
+Produce a message:
+```
+sudo docker run -it --rm mesosphere/kafka-client bash -c ' \
+     echo "Hello, World." | \
+     ./kafka-console-producer.sh \
+     --broker-list broker-0.kafka.mesos:9588 \
+     --topic fintans'
+```
+
+Consume the message:
+```
+sudo docker run -it --rm mesosphere/kafka-client \
+     ./kafka-console-consumer.sh \
+      --zookeeper master.mesos:2181/dcos-service-kafka \
+      --topic fintrans --from-beginning
+```
+
+## The url m1.dcos-demo doesn't come up in the browser
 
 This might be caused due to bad /etc/hosts file.
 
 Validate that `vagrant hostmanager` is able to run properly.  If errors
    occur correct the entries in /etc/hosts and try `vagrant hostmanager` to correct all entries.
 
-# What urls should work after install?
+## What urls should work after install?
 
 1. Exhibitor url : http://m1.dcos-demo:8181/exhibitor/v1/ui/index.html
 2. DC/OS dashboard: http://m1.dcos-demo/
-3.
 
-# clean up kafka and all it's resources
+## clean up kafka and all it's resources
 
 1. remove the kafka service:
 ```

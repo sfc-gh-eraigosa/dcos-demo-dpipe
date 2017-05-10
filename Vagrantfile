@@ -87,7 +87,7 @@ Vagrant.configure(2) do |config|
     config.vm.network "forwarded_port", guest: 80, host: 80
     config.vm.provider "virtualbox" do |vb|
          vb.name = "#{config.vm.hostname}"
-         vb.memory = "4096"
+         vb.memory = "2048"
          vb.cpus = 2
     end
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
@@ -100,14 +100,14 @@ Vagrant.configure(2) do |config|
   end
 
   # configure public agents
-  config.vm.define "a1.#{dcosname}" do |config|
+  config.vm.define "p1.#{dcosname}" do |config|
     config.vm.box = defaultbox
-    config.vm.hostname = "a1.#{dcosname}"
+    config.vm.hostname = "p1.#{dcosname}"
     config.vm.network "private_network", ip: "192.168.0.4"
     config.vm.provider "virtualbox" do |vb|
          vb.name = "#{config.vm.hostname}"
          vb.memory = "6072"
-         vb.cpus = 2
+         vb.cpus = 4
     end
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
   # https://jira.mesosphere.com/browse/DCOS_VAGRANT-15
@@ -119,14 +119,14 @@ Vagrant.configure(2) do |config|
   end
 
   # configure private agents
-  config.vm.define "p1.#{dcosname}" do |config|
+  config.vm.define "p2.#{dcosname}" do |config|
     config.vm.box = defaultbox
-    config.vm.hostname = "p1.#{dcosname}"
+    config.vm.hostname = "p2.#{dcosname}"
     config.vm.network "private_network", ip: "192.168.0.5"
     config.vm.provider "virtualbox" do |vb|
          vb.name = "#{config.vm.hostname}"
          vb.memory = "6072"
-         vb.cpus = 6
+         vb.cpus = 4
     end
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
   # https://jira.mesosphere.com/browse/DCOS_VAGRANT-15
