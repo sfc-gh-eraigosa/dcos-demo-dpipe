@@ -12,10 +12,13 @@ fi
 
 # setup kafka
 echo "Installing minimal kafka setup"
-dcos auth login
+if ! dcos node > /dev/null 2<&1; then
+    dcos auth login
+fi
+
 dcos package install kafka --options=kafka-minimal.json --yes
-echo "--> wait 2 minutes"
-sleep 120
+echo "--> wait 4 minutes"
+sleep 240
 
 
 # setup topic

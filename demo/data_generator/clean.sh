@@ -11,15 +11,10 @@ if ! dcos --version 2>/dev/null; then
 fi
 
 # setup kafka
-echo "Installing data_generator service"
+echo "Cleaning data_generator service"
 if ! dcos node > /dev/null 2<&1; then
     dcos auth login
 fi
 
-dcos marathon app add service-generator.json
 
-echo "--> wait 30 seconds"
-sleep 30
-
-# verify deployment status
-dcos marathon app list
+dcos marathon app remove /dpipe/data-generator

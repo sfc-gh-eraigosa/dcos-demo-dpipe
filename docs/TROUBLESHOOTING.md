@@ -118,3 +118,34 @@ dcos package uninstall kafka
 docker run mesosphere/janitor /janitor.py -r kafka-role -p kafka-principal -z dcos-service-kafka
 ```
 Also see [these docs](https://docs.mesosphere.com/1.9/deploying-services/uninstall/#framework-cleaner) for more details
+
+
+## IPv4 forwarding is disabled errors
+
+You might get an error as follows:
+
+```
+vagrant@bootstrap dcos_install]$ sudo bash ./dcos_generate_config.sh --install-prereqs -v
+WARNING: IPv4 forwarding is disabled. Networking will not work.
+Logger set to DEBUG
+====> EXECUTING INSTALL PREREQUISITES
+====> START install_prereqs
+====> STAGE install_prereqs
+====> STAGE install_prereqs
+====> STAGE install_prereqs
+====> STAGE install_prereqs
+====> STAGE install_prereqs
+====> OUTPUT FOR install_prereqs
+====> 192.168.0.4:22 FAILED
+     TASK:
+/usr/bin/ssh -oConnectTimeout=10 -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oBatchMode=yes -oPasswordAuthentication=no -p22 -i genconf/ssh_key -tt vagrant@192.168.0.4 echo INSTALL PREREQUISITES
+```
+
+There is a workaround for this documented on [stack overflow](http://stackoverflow.com/questions/41453263/docker-networking-disabled-warning-ipv4-forwarding-is-disabled-networking-wil)
+
+- edit `/etc/sysctl.conf` and add `net.ipv4.ip_forward=1`
+- restar network services:
+  ```
+  systemctl restart network
+  sysctl net.ipv4.ip_forward
+  ```

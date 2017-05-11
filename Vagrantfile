@@ -16,6 +16,12 @@ mkdir -p /opt/dcos_install/genconf && \
 chown -R vagrant:vagrant /opt/dcos_install
 chmod -R 775 /opt/dcos_install
 
+# patch IPv4
+if ! grep 'net.ipv4.ip_forward=1' /etc/sysctl.conf; then
+  echo 'net.ipv4.ip_forward=1' | sudo tee -a /etc/sysctl.conf
+fi
+sudo systemctl restart network
+
 SCRIPT
 
 $preconfig_master = <<SCRIPT
@@ -87,7 +93,7 @@ Vagrant.configure(2) do |config|
     config.vm.network "forwarded_port", guest: 80, host: 80
     config.vm.provider "virtualbox" do |vb|
          vb.name = "#{config.vm.hostname}"
-         vb.memory = "2048"
+         vb.memory = "3328"
          vb.cpus = 2
     end
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
@@ -106,8 +112,8 @@ Vagrant.configure(2) do |config|
     config.vm.network "private_network", ip: "192.168.0.4"
     config.vm.provider "virtualbox" do |vb|
          vb.name = "#{config.vm.hostname}"
-         vb.memory = "4096"
-         vb.cpus = 4
+         vb.memory = "3328"
+         vb.cpus = 2
     end
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
   # https://jira.mesosphere.com/browse/DCOS_VAGRANT-15
@@ -125,8 +131,8 @@ Vagrant.configure(2) do |config|
     config.vm.network "private_network", ip: "192.168.0.5"
     config.vm.provider "virtualbox" do |vb|
          vb.name = "#{config.vm.hostname}"
-         vb.memory = "4096"
-         vb.cpus = 4
+         vb.memory = "3328"
+         vb.cpus = 2
     end
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
   # https://jira.mesosphere.com/browse/DCOS_VAGRANT-15
@@ -144,8 +150,8 @@ Vagrant.configure(2) do |config|
     config.vm.network "private_network", ip: "192.168.0.6"
     config.vm.provider "virtualbox" do |vb|
          vb.name = "#{config.vm.hostname}"
-         vb.memory = "4096"
-         vb.cpus = 4
+         vb.memory = "3328"
+         vb.cpus = 2
     end
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
   # https://jira.mesosphere.com/browse/DCOS_VAGRANT-15

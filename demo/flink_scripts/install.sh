@@ -12,7 +12,10 @@ fi
 
 # setup kafka
 echo "Installing minimal flink setup"
-dcos auth login
+if ! dcos node > /dev/null 2<&1; then
+    dcos auth login
+fi
+
 dcos package install flink --yes
 echo "--> wait 2 minutes"
 sleep 120

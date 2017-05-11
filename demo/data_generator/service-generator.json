@@ -7,10 +7,11 @@
         "type": "DOCKER",
         "docker": {
             "image": "wenlock/data_generator:latest",
-            "network": "BRIDGE"
+            "network": "BRIDGE",
+            "forcePullImage": true
         }
     },
-    "args": [ "foo" ],
+    "args": [ "--broker broker-0.kafka.mesos:9118" ],
     "labels": {
       "DCOS_SERVICE_NAME": "data-generator"
     }
