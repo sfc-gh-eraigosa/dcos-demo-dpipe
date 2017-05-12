@@ -30,3 +30,4 @@ telemetry_enabled: 'false'
 #https_proxy: https://<proxy_host>:<https_proxy_port>
 #no_proxy:
 #- '.dcose-demo'
+#use_proxy: 'true'

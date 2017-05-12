@@ -41,6 +41,10 @@ Vagrant.configure(2) do |config|
   defaultbox = "bento/centos-7.3"
   dcosname = "dcos-demo"
 
+  http_proxy = ENV['http_proxy']
+  https_proxy = ENV['https_proxy']
+  no_proxy = ENV['no_proxy']
+
   # configure vagrant-hostmanager plugin
   config.hostmanager.enabled = true
   config.hostmanager.manage_host = true
@@ -54,7 +58,6 @@ Vagrant.configure(2) do |config|
     config.vbguest.auto_update = true
   end
 
-
   config.vm.define "bootstrap.#{dcosname}" do |config|
     config.vm.box = defaultbox
     config.vm.hostname = "bootstrap.#{dcosname}"
@@ -64,6 +67,17 @@ Vagrant.configure(2) do |config|
          vb.memory = "1024"
          vb.cpus = 1
     end
+
+    if Vagrant.has_plugin?('vagrant-proxyconf') && http_proxy != ''
+      config.proxy.http      = http_proxy
+      config.proxy.https     = https_proxy
+      config.proxy.no_proxy  = no_proxy
+      config.yum_proxy.http  = http_proxy
+      config.apt_proxy.http  = http_proxy
+      config.apt_proxy.https = https_proxy
+      config.proxy.enabled = true
+    end
+
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
   # https://jira.mesosphere.com/browse/DCOS_VAGRANT-15
     config.vm.provision :shell, inline: "sed -i'' '/^127.0.0.1\\t#{config.vm.hostname}\\tbootstrap$/d' /etc/hosts"
@@ -96,6 +110,17 @@ Vagrant.configure(2) do |config|
          vb.memory = "3328"
          vb.cpus = 2
     end
+
+    if Vagrant.has_plugin?('vagrant-proxyconf') && http_proxy != ''
+      config.proxy.http      = http_proxy
+      config.proxy.https     = https_proxy
+      config.proxy.no_proxy  = no_proxy
+      config.yum_proxy.http  = http_proxy
+      config.apt_proxy.http  = http_proxy
+      config.apt_proxy.https = https_proxy
+      config.proxy.enabled = true
+    end
+
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
   # https://jira.mesosphere.com/browse/DCOS_VAGRANT-15
     config.vm.provision :shell, inline: "sed -i'' '/^127.0.0.1\\t#{config.vm.hostname}\\tm1$/d' /etc/hosts"
@@ -115,6 +140,17 @@ Vagrant.configure(2) do |config|
          vb.memory = "3328"
          vb.cpus = 2
     end
+
+    if Vagrant.has_plugin?('vagrant-proxyconf') && http_proxy != ''
+      config.proxy.http      = http_proxy
+      config.proxy.https     = https_proxy
+      config.proxy.no_proxy  = no_proxy
+      config.yum_proxy.http  = http_proxy
+      config.apt_proxy.http  = http_proxy
+      config.apt_proxy.https = https_proxy
+      config.proxy.enabled = true
+    end
+
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
   # https://jira.mesosphere.com/browse/DCOS_VAGRANT-15
     config.vm.provision :shell, inline: "sed -i'' '/^127.0.0.1\\t#{config.vm.hostname}\\ta1$/d' /etc/hosts"
@@ -134,6 +170,17 @@ Vagrant.configure(2) do |config|
          vb.memory = "3328"
          vb.cpus = 2
     end
+
+    if Vagrant.has_plugin?('vagrant-proxyconf') && http_proxy != ''
+      config.proxy.http      = http_proxy
+      config.proxy.https     = https_proxy
+      config.proxy.no_proxy  = no_proxy
+      config.yum_proxy.http  = http_proxy
+      config.apt_proxy.http  = http_proxy
+      config.apt_proxy.https = https_proxy
+      config.proxy.enabled = true
+    end
+
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
   # https://jira.mesosphere.com/browse/DCOS_VAGRANT-15
     config.vm.provision :shell, inline: "sed -i'' '/^127.0.0.1\\t#{config.vm.hostname}\\tp1$/d' /etc/hosts"
@@ -153,6 +200,17 @@ Vagrant.configure(2) do |config|
          vb.memory = "3328"
          vb.cpus = 2
     end
+
+    if Vagrant.has_plugin?('vagrant-proxyconf') && http_proxy != ''
+      config.proxy.http      = http_proxy
+      config.proxy.https     = https_proxy
+      config.proxy.no_proxy  = no_proxy
+      config.yum_proxy.http  = http_proxy
+      config.apt_proxy.http  = http_proxy
+      config.apt_proxy.https = https_proxy
+      config.proxy.enabled = true
+    end
+
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
   # https://jira.mesosphere.com/browse/DCOS_VAGRANT-15
     config.vm.provision :shell, inline: "sed -i'' '/^127.0.0.1\\t#{config.vm.hostname}\\tp1$/d' /etc/hosts"
@@ -172,6 +230,17 @@ Vagrant.configure(2) do |config|
          vb.memory = "1024"
          vb.cpus = 1
     end
+
+    if Vagrant.has_plugin?('vagrant-proxyconf') && http_proxy != ''
+      config.proxy.http      = http_proxy
+      config.proxy.https     = https_proxy
+      config.proxy.no_proxy  = no_proxy
+      config.yum_proxy.http  = http_proxy
+      config.apt_proxy.http  = http_proxy
+      config.apt_proxy.https = https_proxy
+      config.proxy.enabled = true
+    end
+
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager
   # https://jira.mesosphere.com/browse/DCOS_VAGRANT-15
     config.vm.provision :shell, inline: "sed -i'' '/^127.0.0.1\\t#{config.vm.hostname}\\tp1$/d' /etc/hosts"
