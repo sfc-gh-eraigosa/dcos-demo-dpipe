@@ -1,7 +1,9 @@
 {
+    "mem": 512,
     "brokers": {
        "cpus": 1,
        "mem": 512,
+       "count": 1,
        "heap": {
          "size": 512
        },

@@ -11,7 +11,7 @@
             "forcePullImage": true
         }
     },
-    "args": [ "--broker broker-0.kafka.mesos:9118" ],
+    "cmd": [ "--broker broker-0.kafka.mesos:9118" ],
     "labels": {
       "DCOS_SERVICE_NAME": "data-generator"
     }

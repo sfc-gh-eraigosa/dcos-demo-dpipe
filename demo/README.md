@@ -37,6 +37,13 @@ The components that need to be setup ahead of time include:
 - +-- [**kafka_topic**](kafka_topic) - a folder to setup our kafka topic for the message queue.
 - +-- [**flink_scripts**](flink_scripts) - a folder to help us analyze the incoming data
 
+# Setup
+
+To setup the demo, follow each README.md in the projects folders.  First setup
+[**Kafka**](kafka_topic), then [**Flink**](flink_scripts), and finally the [**data generator**](data_generator/README.md).
+
+Make sure to implement each component fully before moving on to the next.
+
 # Problem
 
 Financial averages often help us make decisions on how we invest our money.  Financial

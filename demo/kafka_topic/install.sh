@@ -17,8 +17,8 @@ if ! dcos node > /dev/null 2<&1; then
 fi
 
 dcos package install kafka --options=kafka-minimal.json --yes
-echo "--> wait 4 minutes"
-sleep 240
+echo "--> wait 8 minutes"
+sleep 480
 
 
 # setup topic

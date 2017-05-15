@@ -84,7 +84,7 @@ sudo docker run -it --rm mesosphere/kafka-client bash -c ' \
      echo "Hello, World." | \
      ./kafka-console-producer.sh \
      --broker-list broker-0.kafka.mesos:9588 \
-     --topic fintans'
+     --topic fintrans'
 ```
 
 Consume the message:
@@ -149,3 +149,9 @@ There is a workaround for this documented on [stack overflow](http://stackoverfl
   systemctl restart network
   sysctl net.ipv4.ip_forward
   ```
+
+## Where is the page that generates the auth token?
+
+The auth token page can be found here:
+
+  http://m1.dcos-demo/login?redirect_uri=urn:ietf:wg:oauth:2.0:oob

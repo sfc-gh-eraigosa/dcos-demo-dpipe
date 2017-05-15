@@ -1,0 +1,6 @@
+{
+  "service": {
+    "name": "dcos-demo",
+    "slots": 1
+  }
+}
