@@ -21,3 +21,5 @@ NOTE: If you use docker-machine in the $HOME directory, on MacOS bind mount volu
       You should be aware of this in case you attempt to build outside of the /User directory, otherwise bind mounts won't work.
 
 # setting up the project
+
+- [Training](http://dataartisans.github.io/flink-training/index.html)
