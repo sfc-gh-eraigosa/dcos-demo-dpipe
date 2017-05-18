@@ -155,3 +155,10 @@ There is a workaround for this documented on [stack overflow](http://stackoverfl
 The auth token page can be found here:
 
   http://m1.dcos-demo/login?redirect_uri=urn:ietf:wg:oauth:2.0:oob
+
+## Starting netcat for flink wordcount streaming demo:
+If your doing the flink training demos and trying to learn how to use the wordcount demos, these can be started on your host as follows:
+```
+nc -l -p 40000 $(hostname)
+
+```

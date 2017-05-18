@@ -1,0 +1,468 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.dcos.demo.flink</groupId>
+    <artifactId>gatherer</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>${project.artifactId}</name>
+    <description>Flink Demo application</description>
+    <inceptionYear>2017</inceptionYear>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+
+    <properties>
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
+        <encoding>UTF-8</encoding>
+
+        <!-- Default scala versions, may be overwritten by build profiles -->
+
+        <scala.version>2.11.5</scala.version>
+        <scala.compat.version>2.11</scala.compat.version>
+        <scala.macros.version>2.11</scala.macros.version>
+        <scala.binary.version>2.11</scala.binary.version>
+        <scala.project.version>scala_${scala.binary.version}</scala.project.version>
+        <flink.version>1.2.1</flink.version>
+
+        <!-- other versions  -->
+        <log4j.configuration>log4j-test.properties</log4j.configuration>
+        <guava.version>18.0</guava.version>
+        <akka.version>2.3-custom</akka.version>
+        <java.version>1.8</java.version>
+        <chill.version>0.7.4</chill.version>
+        <asm.version>5.0.4</asm.version>
+        <zookeeper.version>3.4.6</zookeeper.version>
+        <curator.version>2.12.0</curator.version>
+        <jackson.version>2.7.4</jackson.version>
+        <metrics.version>3.1.0</metrics.version>
+        <junit.version>4.12</junit.version>
+        <mockito.version>1.10.19</mockito.version>
+        <powermock.version>1.6.5</powermock.version>
+
+        <!--
+            Keeping the MiniKDC version fixed instead of taking hadoop version dependency
+            to support testing Kafka, ZK etc., modules that does not have Hadoop dependency
+            Starting Hadoop 3, org.apache.kerby will be used instead of MiniKDC. We may have
+            to revisit the impact at that time.
+        -->
+        <minikdc.version>2.7.2</minikdc.version>
+        <generated.docs.dir>./docs/_includes/generated</generated.docs.dir>
+
+    </properties>
+
+    <dependencies>
+
+        <!-- flink dependencies -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-streaming-${scala.project.version}</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-${scala.project.version}</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-clients_${scala.binary.version}</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-gelly_${scala.binary.version}</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-table_${scala.binary.version}</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-gelly-${scala.project.version}</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-kafka-0.10_${scala.binary.version}</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-elasticsearch2_${scala.binary.version}</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+        <!--  general dependencies -->
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>force-shading</artifactId>
+            <version>1.4-SNAPSHOT</version>
+        </dependency>
+
+        <!-- Root dependencies for all projects -->
+
+        <!-- Logging API
+        <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </dependency>
+    -->
+        <!-- 'javax.annotation' classes like '@Nullable'
+        <dependency>
+          <groupId>com.google.code.findbugs</groupId>
+          <artifactId>jsr305</artifactId>
+        </dependency>
+    -->
+        <!-- Test -->
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.specs2</groupId>
+            <artifactId>specs2-core_${scala.compat.version}</artifactId>
+            <version>2.4.16</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_${scala.compat.version}</artifactId>
+            <version>2.2.4</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <profiles>
+
+        <!-- Profile to switch to Scala Version 2.11 -->
+        <profile>
+            <id>scala-2.11</id>
+            <activation>
+                <property>
+                    <name>scala-2.11</name>
+                </property>
+            </activation>
+            <properties>
+                <scala.version>2.11.7</scala.version>
+                <scala.binary.version>2.11</scala.binary.version>
+            </properties>
+        </profile>
+
+
+        <profile>
+            <id>vendor-repos</id>
+            <!-- Add vendor maven repositories -->
+            <repositories>
+                <!-- Cloudera -->
+                <repository>
+                    <id>cloudera-releases</id>
+                    <url>https://repository.cloudera.com/artifactory/cloudera-repos</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <!-- Hortonworks -->
+                <repository>
+                    <id>HDPReleases</id>
+                    <name>HDP Releases</name>
+                    <url>http://repo.hortonworks.com/content/repositories/releases/</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                </repository>
+                <repository>
+                    <id>HortonworksJettyHadoop</id>
+                    <name>HDP Jetty</name>
+                    <url>http://repo.hortonworks.com/content/repositories/jetty-hadoop</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                </repository>
+                <!-- MapR -->
+                <repository>
+                    <id>mapr-releases</id>
+                    <url>http://repository.mapr.com/maven/</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                </repository>
+            </repositories>
+        </profile>
+
+        <profile>
+            <!--
+                MapR build profile. This build profile must be used together with "vendor-repos"
+                to be able to locate the MapR Hadoop / Zookeeper dependencies.
+            -->
+            <id>mapr</id>
+
+            <!--
+                use MapR Hadoop / Zookeeper dependencies appropriate for MapR 5.2.0;
+                users of different MapR versions should simply override these versions
+                with appropriate values.
+            -->
+            <properties>
+                <hadoop.version>2.7.0-mapr-1607</hadoop.version>
+                <zookeeper.version>3.4.5-mapr-1604</zookeeper.version>
+            </properties>
+
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.zookeeper</groupId>
+                    <artifactId>zookeeper</artifactId>
+                    <version>${zookeeper.version}</version>
+                    <exclusions>
+                        <!--
+                            exclude netty, because MapR's Zookeeper distribution has
+                            a conflicting Netty version with Flink's Netty dependency
+                        -->
+                        <exclusion>
+                            <groupId>org.jboss.netty</groupId>
+                            <artifactId>netty</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <!-- used for aggregating  ScalaDoc with JavaDoc -->
+            <id>aggregate-scaladoc</id>
+            <dependencies>
+                <dependency>
+                    <!--
+                    This is necessary for building the java docs using Java 8. Otherwise the javadoc
+                    plugin will fail with "javadoc: error -
+                        com.sun.tools.doclets.internal.toolkit.util.DocletAbortException:
+                            com.sun.tools.javac.code.Symbol$CompletionFailure:
+                                class file for akka.testkit.TestKit not found"
+                    -->
+                    <groupId>com.data-artisans</groupId>
+                    <artifactId>flakka-testkit_${scala.binary.version}</artifactId>
+                    <version>${akka.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+            <build>
+
+                <plugins>
+                    <!-- We need to clean compiled classes to make sure that genjavadoc
+                    is called to generate our fake Java source from Scala source. -->
+                    <plugin>
+                        <artifactId>maven-clean-plugin</artifactId>
+                        <version>2.5</version><!--$NO-MVN-MAN-VER$-->
+                        <executions>
+                            <execution>
+                                <id>clean-target</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>clean</goal>
+                                </goals>
+                                <configuration>
+                                    <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                                    <filesets>
+                                        <fileset>
+                                            <directory>${project.build.directory}</directory>
+                                            <includes>
+                                                <include>**/*.class</include>
+                                                <include>**/classes.*.timestamp</include>
+                                            </includes>
+                                        </fileset>
+                                    </filesets>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>net.alchim31.maven</groupId>
+                        <artifactId>scala-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>doc</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>compile</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <args>
+                                <arg>-P:genjavadoc:out=${project.build.directory}/genjavadoc</arg>
+                            </args>
+                            <compilerPlugins>
+                                <compilerPlugin>
+                                    <groupId>com.typesafe.genjavadoc</groupId>
+                                    <artifactId>genjavadoc-plugin_${scala.version}</artifactId>
+                                    <version>0.8</version>
+                                </compilerPlugin>
+                            </compilerPlugins>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>add-source</goal>
+                                </goals>
+                                <configuration>
+                                    <sources>
+                                        <source>${project.build.directory}/genjavadoc</source>
+                                    </sources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+
+        <!--
+            Test profile A excludes all tests starting with (A-M).
+            profile B excludes tests (N-Z).
+            This allows us to split up the test execution into separate profiles.
+        -->
+        <profile>
+            <id>flink-fast-tests-a</id>
+            <properties>
+                <!-- Allow A-I by forbidding J-Z -->
+                <flink-fast-tests-pattern>%regex[.*/[J-Z].*]</flink-fast-tests-pattern>
+            </properties>
+        </profile>
+        <profile>
+            <id>flink-fast-tests-b</id>
+            <properties>
+                <!-- Allow J-R, forbid A-I and S - Z -->
+                <flink-fast-tests-pattern>%regex[.*/[A-IS-Z].*]</flink-fast-tests-pattern>
+            </properties>
+        </profile>
+        <profile>
+            <id>flink-fast-tests-c</id>
+            <properties>
+                <!-- Allow S-Z, forbid A-R -->
+                <flink-fast-tests-pattern>%regex[.*/[A-R].*]</flink-fast-tests-pattern>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <sourceDirectory>src/main/scala</sourceDirectory>
+        <testSourceDirectory>src/test/scala</testSourceDirectory>
+        <plugins>
+            <!-- We need to clean compiled classes to make sure that genjavadoc
+                      is called to generate our fake Java source from Scala source. -->
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version><!--$NO-MVN-MAN-VER$-->
+                <executions>
+                    <execution>
+                        <id>clean-target</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <configuration>
+                            <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                            <filesets>
+                                <fileset>
+                                    <directory>${project.build.directory}</directory>
+                                    <includes>
+                                        <include>**/*.class</include>
+                                        <include>**/classes.*.timestamp</include>
+                                    </includes>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- jar files -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version><!--$NO-MVN-MAN-VER$-->
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <!-- see http://davidb.github.com/scala-maven-plugin -->
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                        <configuration>
+                            <args>
+                                <arg>-dependencyfile</arg>
+                                <arg>${project.build.directory}/.scala_dependencies</arg>
+                            </args>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.18.1</version>
+                <configuration>
+                    <useFile>false</useFile>
+                    <disableXmlReport>true</disableXmlReport>
+                    <!-- If you have classpath issue like NoDefClassError,... -->
+                    <!-- useManifestOnlyJar>false</useManifestOnlyJar -->
+                    <includes>
+                        <include>**/*Test.*</include>
+                        <include>**/*Suite.*</include>
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
