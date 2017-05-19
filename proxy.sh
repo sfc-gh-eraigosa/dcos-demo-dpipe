@@ -19,7 +19,7 @@ if [ ! -z "$PROXY" ] &&  [ ! "$PROXY" = '"nil"' ]; then
     export HTTPS_PROXY=$https_proxy
     export ftp_proxy=$(echo $http_proxy | sed 's/^http/ftp/g')
     export socks_proxy=$(echo $http_proxy | sed 's/^http/socks/g')
-    export no_proxy="/var/run/docker.sock,localaddress,localhost,.dcos-demo,127.0.0.1,10.0.0.0/16,172.0.0.0/16,192.168.0.0/16,${no_proxy_domains}"
+    export no_proxy="10.0.0.0/16,172.0.0.0/16,192.168.0.0/16,${no_proxy_domains}"
     export NO_PROXY=$no_proxy
 
 else

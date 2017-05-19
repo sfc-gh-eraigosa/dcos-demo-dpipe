@@ -1,4 +1,3 @@
-
 # setup the plugins
 required_plugins = %w(vagrant-proxyconf vagrant-vbguest vagrant-hostmanager)
 required_plugins.each do | plugin |
@@ -50,11 +49,12 @@ def dcos_box(name, domain, memory, cpus, ip, box, proxy, config)
     if Vagrant.has_plugin?('vagrant-proxyconf') && proxy[:http_proxy] != ''
       config.proxy.http      = proxy[:http_proxy]
       config.proxy.https     = proxy[:https_proxy]
-      config.proxy.no_proxy  = proxy[:no_proxy]
+      config.proxy.no_proxy  = "/var/run/docker.sock,localaddress,localhost,127.0.0.1,.#{domain},#{proxy[:no_proxy]}"
       config.yum_proxy.http  = proxy[:http_proxy]
       config.apt_proxy.http  = proxy[:http_proxy]
       config.apt_proxy.https = proxy[:https_proxy]
       config.proxy.enabled = true
+      config.vm.provision "shell", path: "vagrant_scripts/docker_proxy_config.sh", privileged: false
     end
 
   # Hack to remove loopback host alias that conflicts with vagrant-hostmanager

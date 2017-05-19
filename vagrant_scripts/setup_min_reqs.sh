@@ -2,7 +2,7 @@
 
 # setup environment files
 echo "--> setup environment ..." && \
-sudo bash -c 'cat > /etc/environment << ENV
+sudo bash -c 'cat >> /etc/environment << ENV
 export LC_ALL=en_US.utf-8
 export LANG=en_US.utf-8
 ENV'
