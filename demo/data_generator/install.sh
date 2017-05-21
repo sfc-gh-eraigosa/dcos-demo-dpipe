@@ -16,10 +16,17 @@ if ! dcos node > /dev/null 2<&1; then
     dcos auth login
 fi
 
-dcos marathon app add service-generator.json
+# generate service-generator.json
+brokers=$(dcos kafka connection|jq -r '.dns|join(",")')
 
-echo "--> wait 30 seconds"
-sleep 30
+cat ./service-generator.json| \
+jq -r --arg broker $brokers \
+ '.args=["-broker", $broker]|.' > ./.service-generator.json
+
+dcos marathon app add ./.service-generator.json
+
+echo "--> wait 2 minutes"
+sleep 120
 
 # verify deployment status
 dcos marathon app list

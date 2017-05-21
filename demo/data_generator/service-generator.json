@@ -2,17 +2,20 @@
     "id": "/dpipe/data-generator",
     "instances": 1,
     "cpus": 0.1,
-    "mem": 32,
+    "mem": 126,
     "container": {
         "type": "DOCKER",
         "docker": {
             "image": "wenlock/data_generator:latest",
-            "network": "BRIDGE",
-            "forcePullImage": true
+            "privileged": false,
+            "forcePullImage": true,
+            "parameters": [
+                {
+                    "key": "label",
+                    "value": "DCOS_SERVICE_NAME=data-generator"
+                }
+            ]
         }
     },
-    "cmd": [ "--broker broker-0.kafka.mesos:9118" ],
-    "labels": {
-      "DCOS_SERVICE_NAME": "data-generator"
-    }
+    "args": [ "-broker", "broker-0.kafka.mesos:9427" ]
 }

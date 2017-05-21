@@ -29,7 +29,15 @@ We'll deploy a docker container similar to the steps in [these instructions](htt
    docker push <youraccount>/data_generator:latest
    ```
 
+   The service-generator.json script should be modified to use any new labels or container names.
+
 To learn more about the fintrans generator, [visit the example here](https://github.com/dcos/demos/blob/master/1.9/fintrans/README.md).
+
+# Pre-requisites
+
+The data generator requires [Kafka to be setup first](../kafka_topic/README.md).
+
+Once this is done, run the `topics.sh` script to create all required topics.
 
 # Running it
 
