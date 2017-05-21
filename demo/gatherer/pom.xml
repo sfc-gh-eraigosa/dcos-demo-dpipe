@@ -57,6 +57,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>net.liftweb</groupId>
+            <artifactId>lift-json_2.11</artifactId>
+            <version>3.1.0-M3</version>
+        </dependency>
 
         <!-- flink dependencies -->
         <dependency>
