@@ -49,3 +49,20 @@ Deploy the container service with DC/OS marathon
    ```
    ./install.sh
    ```
+
+# Validate
+
+Verify that we are getting data in one of more of the topics.  Topics will be city names such as : `London NYC SF Moscow Tokyo`.
+
+1. Connect to one of the agent nodes.
+   ```
+   vagrant ssh p1.dcos-demo
+   ```
+2. Start a Kafka client container on one of the agents:
+   ```
+   docker run -it --rm mesosphere/kafka-client
+   ```
+3. Run a Kafka consumer script:
+   ```
+   ./kafka-console-consumer.sh --zookeeper 192.168.0.3:2181/dcos-service-kafka --topic "NYC"
+   ```

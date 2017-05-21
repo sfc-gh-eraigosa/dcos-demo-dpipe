@@ -26,15 +26,15 @@ These are the components that we will work with:
 # Requirements & Component Install
 
 The components that need to be setup ahead of time include:
-1. A docker engine so that we can [build and create the container image](data_generator/README.md).
-2. A minimal install of [Kafka](https://github.com/dcos/examples/tree/master/kafka/1.9) to capture the data.
+1. A minimal install of [Kafka](https://github.com/dcos/examples/tree/master/kafka/1.9) to capture the data.
+2. A docker engine so that we can [build and create the container image](data_generator/README.md).
 3. A minimal install of [Flink](https://github.com/dcos/examples/tree/master/flink/1.9) to analyze the data.
 
 # This projects layout
 
 +- [**demo**](README.md) - this folder
-- +-- [**data_generator**](data_generator/README.md) - a folder with a simple [Dockerfile](data_generator/Dockerfile) to represent our data generator.
 - +-- [**kafka_topic**](kafka_topic) - a folder to setup our kafka topic for the message queue.
+- +-- [**data_generator**](data_generator/README.md) - a folder with a simple [Dockerfile](data_generator/Dockerfile) to represent our data generator.
 - +-- [**flink_scripts**](flink_scripts) - a folder to help us analyze the incoming data
 
 # Setup
