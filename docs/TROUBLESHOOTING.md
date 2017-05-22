@@ -162,3 +162,36 @@ If your doing the flink training demos and trying to learn how to use the wordco
 nc -l -p 40000 $(hostname)
 
 ```
+
+# Recover broker after cluster restart
+
+If your running a DC/OS environment on a small computer or laptop and you place the computer to sleep.  After starting the system back up, kafka and brokers might remain down.  You can use the DC/OS marathon UI to restart the kafka services but the broker might still be down.  Use these steps to recover the broker:
+
+1. Verify the broker is still down:
+   ```
+   dcos kafka broker list    
+  []
+   ```
+   Indicates there are no active brokers.
+2. Restart the broker:
+   ```
+   dcos kafka broker restart 0
+   [
+  "broker-0__4d9aa712-969d-4be0-8874-726f4546beae"
+   ]
+   ```
+3. Running kafka connection should verify the broker connection is available again.
+   ```
+   dcos kafka connection
+    {
+      "address": [
+        "192.168.0.5:9427"
+      ],
+      "zookeeper": "master.mesos:2181/dcos-service-kafka",
+      "dns": [
+        "broker-0.kafka.mesos:9427"
+      ],
+      "vip": "broker.kafka.l4lb.thisdcos.directory:9092"
+    }
+
+   ```

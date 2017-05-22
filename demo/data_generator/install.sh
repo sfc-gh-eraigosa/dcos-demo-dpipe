@@ -18,10 +18,14 @@ fi
 
 # generate service-generator.json
 brokers=$(dcos kafka connection|jq -r '.dns|join(",")')
+if [ -z "$brokers" ] ; then
+    echo "ERROR : no brokers available to connect to.  Deploy kafka or broker services first."
+    exit 1
+fi
 
 cat ./service-generator.json| \
-jq -r --arg broker $brokers \
- '.args=["-broker", $broker]|.' > ./.service-generator.json
+jq -r --arg brokers $brokers \
+ '.args=["-broker", $brokers]|.' > ./.service-generator.json
 
 dcos marathon app add ./.service-generator.json
 
