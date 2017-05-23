@@ -55,7 +55,6 @@ object SocketWindowWordCount {
         System.err.println("To start a simple text server, run 'netcat -l -p <port> $(hostname)' " +
           "and type the input text into the command line")
         return
-
     }
 
     // get the execution environment
