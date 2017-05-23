@@ -34,7 +34,8 @@ object SocketWindowWordCount {
     // Load the defaults
 
     var properties: Properties = new Properties()
-    val in = new FileInputStream(new File(System.getProperty("user.dir") + File.separator + "application.conf").getAbsolutePath())
+    val in = getClass().getResourceAsStream("/application.conf")
+//    in = new FileInputStream(new File(System.getProperty("user.dir") + File.separator + "application.conf").getAbsolutePath())
     properties.load(in)
     in.close()
     val params = ParameterTool.fromArgs(args)
