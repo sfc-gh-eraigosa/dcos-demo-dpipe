@@ -8,7 +8,7 @@ import org.apache.flink.api.java.utils.ParameterTool
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.api.windowing.assigners.SlidingProcessingTimeWindows
 import org.apache.flink.streaming.api.windowing.time.Time
-import org.apache.flink.streaming.connectors.kafka.{FlinkKafkaConsumer010, FlinkKafkaProducer010}
+import org.apache.flink.streaming.connectors.kafka.{FlinkKafkaConsumer010, FlinkKafkaProducer010, FlinkKafkaProducer09}
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema
 
 /**
@@ -53,7 +53,17 @@ object MovingAverage {
 
       // print the results with a single thread, rather than in parallel
       results.print().setParallelism(1)
-//      stream.print().setParallelism(1)  // raw output
+
+      // add a producer to place the moving average in
+      val producer = new FlinkKafkaProducer09[String](
+        "movingaverage",
+        new SimpleStringSchema(),
+        properties
+      )
+      producer.setLogFailuresOnly(false)
+      producer.setFlushOnCheckpoint(true)
+      var kafka_results = results.map(_.toString())
+      kafka_results.addSink(producer)
 
       env.execute("Read from Kafka example")
 

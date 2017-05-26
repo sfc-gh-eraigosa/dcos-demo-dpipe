@@ -34,5 +34,4 @@ function CreateTopics() {
     done
 }
 
-CreateTopics "London NYC SF Moscow Tokyo"
-
+CreateTopics "London NYC SF Moscow Tokyo movingaverage"
