@@ -2,7 +2,7 @@
 
 This is a simple demo for learning DC/OS custom installation and setup on local laptop.
 
-If your looking for a more complex demo, checkout these projects :
+You can also find other cool vagrant and DC/OS demos here:
 - https://github.com/dcos/dcos-vagrant.git
 - https://github.com/dcos/demos
 
@@ -15,7 +15,7 @@ If your looking for a more complex demo, checkout these projects :
 
 ## Time Estimate
 
-- Allow 30 minutes for vagrant up to complete.
+- Allow 60 minutes for vagrant up to complete.
 - Allow 30 minutes for DC/OS deployment steps.
 
 ## How to prepare
@@ -37,7 +37,6 @@ If your looking for a more complex demo, checkout these projects :
 
 ## What does this project do?
 
-- This project will setup 7 nodes for learning how to deploy DC/OS. 1 bootstrap, 1 master, 1 public agent and 4 private agents. Further we will deploy a sample data pipeline.
 
 The goals are simple.  Learn how to [deploy DC/OS](https://dcos.io/docs/1.9/installing/custom/) and manage a simple data pipeline.
 
