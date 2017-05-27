@@ -58,13 +58,13 @@ Lets use the data generator topics as a way to provide us with the current price
 some factitious position. The data will provide a continuous stream of random prices
 that can be used to perform aggregation and data analysis.
 
-Now lets use the [**gatherer](gatherer) project to perform the work.
+Now lets use the [**gatherer**](gatherer) project to perform the work.
 
 # Retrospective
 
 In this demo we learned how to setup kafka with DC/OS, we then setup a simple
 docker container to generate data. We installed flink to make it possible to provide
-a way to introduce a tool for working with streaming data.  We then setup our 
+a way to introduce a tool for working with streaming data.  We then setup our
 data aggregation project which helped us calculate a moving standard deviation on that
 data and produce a new set of streaming data.
 
