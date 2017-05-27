@@ -46,7 +46,7 @@ object MovingAverage {
             new MovingAverageRecord(properties.getProperty("consumer"), a, List(a));
         }
         .keyBy("label")
-        .window(SlidingProcessingTimeWindows.of(Time.minutes(5),Time.seconds(30)))
+        .window(SlidingProcessingTimeWindows.of(Time.minutes(10),Time.seconds(10),Time.minutes(-10)))
         .reduce((t1, t2) => {
           new MovingAverageRecord(t1.label, t2.amount, t1.amounts ++ t2.amounts )
         })

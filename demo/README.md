@@ -36,34 +36,40 @@ The components that need to be setup ahead of time include:
 - +-- [**kafka_topic**](kafka_topic) - a folder to setup our kafka topic for the message queue.
 - +-- [**data_generator**](data_generator/README.md) - a folder with a simple [Dockerfile](data_generator/Dockerfile) to represent our data generator.
 - +-- [**flink_scripts**](flink_scripts) - a folder to help us analyze the incoming data
+- +-- [**gatherer**](gatherer) - a maven project that helps us aggregate the data_generator topics.
 
 # Setup
 
-To setup the demo, follow each README.md in the projects folders.  First setup
+To setup the demo, follow each README.md in the projects folders. First setup
 [**Kafka**](kafka_topic), then [**Flink**](flink_scripts), and finally the [**data generator**](data_generator/README.md).
 
 Make sure to implement each component fully before moving on to the next.
 
-# Problem
+# Using DC/OS, kafka and flink to determine volatility
 
-Financial averages often help us make decisions on how we invest our money.  Financial
-institutions use complex data analytics to make daily price buy / sell decisions on equities.
+Financial statistics often help us make decisions on how we invest our money. Financial
+institutions use complex data analytics to make daily decisions on financial positions.
+We will use some simple standard deviation to show how we can use flink to aggregate
+price data over time and get a sense for volatility in a given set of data.
 
-Can we use DC/OS to help us know when we can buy or sell a given equity?
+** Can we determine moving volatility over time for a given set of positions to make buy or sell decisions? **
 
-Lets use the data generator as a fake equity that is providing us with the current price of
-some factitious equity.   The data will provide some random sampling that can help us
-make some analysis of the data and predict when it might reach a buy/sell limit that we choose.
+Lets use the data generator topics as a way to provide us with the current price of
+some factitious position. The data will provide a continuous stream of random prices
+that can be used to perform aggregation and data analysis.
 
-If the buy limit is reached, due to the equity approaching a low enough price, then we will allow
-the consumer to let us know when to buy ahead of time, to get the best chance for a buy price.
-
-If the sell limit is reached, due to the equity approaching a high enough price, then we will allow
-the consumer to let us know when to sell the equity ahead of time for the best chance at getting the most for our purchase.
-
-Get it?  Buy low, Sell high is what grandpa always told us.
-
-# How to solve it
-
+Now lets use the [**gatherer](gatherer) project to perform the work.
 
 # Retrospective
+
+In this demo we learned how to setup kafka with DC/OS, we then setup a simple
+docker container to generate data. We installed flink to make it possible to provide
+a way to introduce a tool for working with streaming data.  We then setup our 
+data aggregation project which helped us calculate a moving standard deviation on that
+data and produce a new set of streaming data.
+
+Here are some additional things we could do next:
+
+- Further exercises can now include writing additional triggering logic on the `movingaverage` topic.
+- We could refine our standard deviation calculation to also determine median absolute deviation which could offer better statistical variance.
+- We could also scale out our workers and task managers to determine if having more samples in our calculations provide better results.
