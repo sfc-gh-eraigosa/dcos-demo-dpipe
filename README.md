@@ -37,6 +37,7 @@ You can also find other cool vagrant and DC/OS demos here:
 
 ## What does this project do?
 
+- This project will setup 6 nodes for learning how to deploy DC/OS. 1 bootstrap, 1 master, 1 public agent and 3 private agents. Further we will deploy a sample data pipeline.
 
 The goals are simple.  Learn how to [deploy DC/OS](https://dcos.io/docs/1.9/installing/custom/) and manage a simple data pipeline.
 
