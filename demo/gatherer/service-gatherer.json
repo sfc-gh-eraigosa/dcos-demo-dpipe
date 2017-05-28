@@ -1,0 +1,32 @@
+{
+    "id": "/dpipe/gatherer/consumer/@topic_id@",
+    "instances": 1,
+    "cpus": 0.1,
+    "mem": 32,
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "wenlock/flink-pipe-runner:latest",
+            "privileged": false,
+            "forcePullImage": true,
+            "parameters": [
+                {
+                    "key": "label",
+                    "value": "DCOS_SERVICE_NAME=gatherer.consumer.@topic@"
+                },
+                {
+                    "key": "env",
+                    "value": "FLINK_MASTER=@flink_master@"
+                },
+                {
+                    "key": "env",
+                    "value": "FLINK_CLASS=com.dcos.demo.flink.MovingAverage"
+                }
+            ]
+        }
+    },
+    "args": [ "--kafka_broker", "@brokers@",
+              "--kafka_zookeeper", "@zookeeper@",
+              "--kafka_consumer", "@topic@"
+           ]
+}

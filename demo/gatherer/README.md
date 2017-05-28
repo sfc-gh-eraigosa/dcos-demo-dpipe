@@ -12,27 +12,29 @@ window that started with a 10 minute negative offset, so that we have a sufficie
 sampling of data.  The mean, standard deviation and current value can give some
 potential prediction of the future volatility of the next numbers.
 
-
 # Lets build it
 
-`mvn package`
-
-or
+Use the build script if your working on adjusting the code or producing a new package.  If your not modifying the code, skip to installation to run all required
+flink jobs.
 
 ```
-docker run -it --rm \
-            --workdir /workspace \
-            -v $(pwd):/workspace \
-            maven \
-            mvn clean package
+bash ./build.sh
 ```
-
-# Lets schedule it on flink
 
 After the build, the sub-folder called `target` will contain the produced jar file to upload into flink.  Use the file:
 `gatherer-1.0-SNAPSHOT-jar-with-dependencies.jar`
 
 This file will contain all classes and dependent libraries required.
+
+# Lets schedule it on flink
+
+We run the flink aggregation and analytics jobs as a DC/OS service using a docker container with dockerizer.
+
+Execute the following command on a system with the DC/OS client installed:
+
+```
+bash ./install.sh
+```
 
 # Lets watch the output
 
@@ -40,7 +42,7 @@ We can watch the results of the calculations on the `movingaerage` topic.
 This can be accomplished with the following docker command on one of the
 nodes in the DC/OS cluster.  Lets run this on the master.
 
-1. Connect to the master node `vagrant ssh m1.dcos-demo`
+1. Connect to the master node `vagrant ssh bootstrap.dcos-demo`
 2. Run a kafka client to consume the `movingaverage` topic.
    ```
    docker run -it --rm mesosphere/kafka-client \
@@ -50,7 +52,7 @@ nodes in the DC/OS cluster.  Lets run this on the master.
 
 # Understanding the results
 
-You might see output like the following if you have two flink jobs runing on the `London` and `NYC` topics.
+You might see output like the following if you have two flink jobs running on the `London` and `NYC` topics.
 
 ```
 67 London 2146 319036 4761 3064 64.356224
