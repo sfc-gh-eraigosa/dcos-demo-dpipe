@@ -13,14 +13,6 @@
                 {
                     "key": "label",
                     "value": "DCOS_SERVICE_NAME=gatherer.consumer.@topic@"
-                },
-                {
-                    "key": "env",
-                    "value": "FLINK_MASTER=@flink_master@"
-                },
-                {
-                    "key": "env",
-                    "value": "FLINK_CLASS=com.dcos.demo.flink.MovingAverage"
                 }
             ]
         }
@@ -28,5 +20,10 @@
     "args": [ "--kafka_broker", "@brokers@",
               "--kafka_zookeeper", "@zookeeper@",
               "--kafka_consumer", "@topic@"
-           ]
+           ],
+    "requirePorts": false,
+    "env": {
+              "FLINK_MASTER": "@flink_master@",
+              "FLINK_CLASS": "com.dcos.demo.flink.MovingAverage"
+    }
 }
