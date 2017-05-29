@@ -33,8 +33,12 @@ object Volatility {
       System.out.println(properties.toString())
       System.out.printf("Consumer ==> %s\n",properties.getProperty("volatility.consumer"))
       System.out.printf("Producer ==> %s\n",properties.getProperty("volatility.producer"))
+
+      // Analysis settings
       val label: String = properties.getProperty("volatility.label").toString;
       val confindex: Long = properties.getProperty("volatility.confindex").toLong;
+      System.out.printf("Filter label ==> %s\n", label)
+      System.out.printf("Confidence Index ==> %s\n", confindex.toString)
 
       // get the execution environment
       val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment

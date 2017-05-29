@@ -24,7 +24,7 @@ We'll deploy a docker container similar to the steps in [these instructions](htt
 
    **Notice**, you do not need to build this container if you are just deploying it, continue to the [Running it](#running-it) topic below.
 
-4. Test that the container built ok : `docker run -it --rm data_generator --version`
+4. Test that the container built ok : `docker run -it --rm wenlock/flink-pipe-runner:latest --version`
 
    The service-generator.json script should be modified to use any new labels or container names.
 
