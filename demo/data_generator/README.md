@@ -7,27 +7,24 @@ our data.
 
 We'll deploy a docker container similar to the steps in [these instructions](https://dcos.io/docs/1.9/deploying-services/creating-services/deploy-docker-app/).
 
-1. Lets setup a local docker engine so we can build the images
+1. Connect to the `bootstrap.dcos-demo` node:
    ```
-   docker-machine create --driver virtualbox \
-      --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso \
-      --virtualbox-memory "2048" \
-      --virtualbox-disk-size "50000" \
-      default
-   eval $(docker-machine env)
+   vagrant ssh bootstrap.dcos-demo
    ```
-
-2. Now we can build it as follows: `docker build --tag data_generator .`
-
-3. Test that the container built ok : `docker run -it --rm data_generator --version`
-
-4. Push the container to hub.docker.com registry so that we can deploy it.
+2. In order to push the container durring the build step, you should login.
    ```
    docker login
-   # specify the user and password for the account
-   docker tag data_generator <youraccount>/data_generator:latest
-   docker push <youraccount>/data_generator:latest
    ```
+
+3. Now run the build.sh script to build and publish the container.
+
+   ```
+   ./build.sh
+   ```
+
+   **Notice**, you do not need to build this container if you are just deploying it, continue to the [Running it](#running-it) topic below.
+
+4. Test that the container built ok : `docker run -it --rm data_generator --version`
 
    The service-generator.json script should be modified to use any new labels or container names.
 
