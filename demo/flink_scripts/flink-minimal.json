@@ -1,6 +1,6 @@
 {
   "service": {
-    "name": "dcos-demo",
+    "name": "demo-flink",
     "slots": 1
   }
 }

@@ -23,12 +23,21 @@
 
         <!-- Default scala versions, may be overwritten by build profiles -->
 
+        <!--
         <scala.version>2.11.5</scala.version>
         <scala.compat.version>2.11</scala.compat.version>
         <scala.macros.version>2.11</scala.macros.version>
         <scala.binary.version>2.11</scala.binary.version>
         <scala.project.version>scala_${scala.binary.version}</scala.project.version>
-        <flink.version>1.2.1</flink.version>
+        -->
+
+        <scala.version>2.10.4</scala.version>
+        <scala.compat.version>2.10</scala.compat.version>
+        <scala.macros.version>2.10</scala.macros.version>
+        <scala.binary.version>2.10</scala.binary.version>
+        <scala.project.version>scala_${scala.binary.version}</scala.project.version>
+
+        <flink.version>1.2.0</flink.version>
 
         <!-- other versions  -->
         <log4j.configuration>log4j-test.properties</log4j.configuration>
@@ -44,6 +53,7 @@
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
         <powermock.version>1.6.5</powermock.version>
+        <lift.version>3.1.0-M3</lift.version>
 
         <!--
             Keeping the MiniKDC version fixed instead of taking hadoop version dependency
@@ -57,11 +67,13 @@
     </properties>
 
     <dependencies>
+        <!--  Not using this yet
         <dependency>
             <groupId>net.liftweb</groupId>
-            <artifactId>lift-json_2.11</artifactId>
-            <version>3.1.0-M3</version>
+            <artifactId>lift-json_${scala.project.version}</artifactId>
+            <version>${lift.version}</version>
         </dependency>
+        -->
 
         <!-- flink dependencies -->
         <dependency>
@@ -159,6 +171,7 @@
     <profiles>
 
         <!-- Profile to switch to Scala Version 2.11 -->
+        <!--
         <profile>
             <id>scala-2.11</id>
             <activation>
@@ -171,7 +184,21 @@
                 <scala.binary.version>2.11</scala.binary.version>
             </properties>
         </profile>
+        -->
 
+        <!-- Profile to switch to Scala Version 2.10 -->
+        <profile>
+            <id>scala-2.10</id>
+            <activation>
+                <property>
+                    <name>scala-2.10</name>
+                </property>
+            </activation>
+            <properties>
+                <scala.version>2.10.4</scala.version>
+                <scala.binary.version>2.10</scala.binary.version>
+            </properties>
+        </profile>
 
         <profile>
             <id>vendor-repos</id>

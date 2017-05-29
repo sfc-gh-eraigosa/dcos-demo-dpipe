@@ -195,3 +195,11 @@ If your running a DC/OS environment on a small computer or laptop and you place 
     }
 
    ```
+
+# If flink fails to start
+
+In the flink_scrips directory you can also find a flink-minimal.json configuration that can be used to verify that flink is functional from a startup perspective.  By default the demo will require approximately 2.5 cpus and 3G of memory to be offered from DC/OS.  To test the minimal configuration you can run the following command, in the `demo/flink_scripts` directory:
+
+```
+dcos package install flink --options=flink-minimal.json --yes
+```

@@ -16,6 +16,6 @@ if ! dcos node > /dev/null 2<&1; then
     dcos auth login
 fi
 
-dcos package install flink --options=flink-minimal.json --yes
+dcos package install flink --options=flink-demo.json --yes
 echo "--> wait 2 minutes"
 sleep 120

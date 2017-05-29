@@ -5,6 +5,7 @@ set -o errtrace
 set -o nounset
 set -o pipefail
 
+export flink_instance="demo-flink"
 if ! dcos --version 2>/dev/null; then
   echo "Install a dcos cli!"
   exit 1
@@ -37,7 +38,7 @@ fi
 
 flink_rpc_address=$(curl -s \
       --header "Authorization: token=$(dcos config show core.dcos_acs_token)" \
-      --url "${dcos_leader}/service/dcos-demo/jobmanager/config" | \
+      --url "${dcos_leader}/service/${flink_instance}/jobmanager/config" | \
       jq -r '.[]|select(.key | contains("jobmanager.rpc.address"))|.value')
 if [ -z "$flink_rpc_address" ] ; then
     echo "ERROR : unable to get jobmanager.rpc.address jobmanager/config from flink. Check if flink is started."
@@ -46,7 +47,7 @@ fi
 
 flink_rpc_port=$(curl -s \
       --header "Authorization: token=$(dcos config show core.dcos_acs_token)" \
-      --url "${dcos_leader}/service/dcos-demo/jobmanager/config" | \
+      --url "${dcos_leader}/service/${flink_instance}/jobmanager/config" | \
       jq -r '.[]|select(.key | contains("jobmanager.rpc.port"))|.value')
 if [ -z "$flink_rpc_port" ] ; then
     echo "ERROR : unable to get jobmanager.rpc.port jobmanager/config from flink. Check if flink is started."

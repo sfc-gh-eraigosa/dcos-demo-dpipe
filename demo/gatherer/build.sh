@@ -14,7 +14,7 @@ docker run -it --rm \
             maven \
             mvn clean package
 
-docker build --tag wenlock/flink-pipe-runner:latest .
-docker push wenlock/flink-pipe-runner:latest
+
+"$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/build.containers.sh"
 
 echo "build done"

@@ -1,8 +1,8 @@
 {
     "id": "/dpipe/gatherer/consumer/@topic_id@",
     "instances": 1,
-    "cpus": 0.1,
-    "mem": 32,
+    "cpus": 0.3,
+    "mem": 128,
     "container": {
         "type": "DOCKER",
         "docker": {
@@ -19,9 +19,8 @@
     },
     "args": [ "--kafka_broker", "@brokers@",
               "--kafka_zookeeper", "@zookeeper@",
-              "--kafka_consumer", "@topic@"
+              "--kafka_consumer_topic", "@topic@"
            ],
-    "requirePorts": false,
     "env": {
               "FLINK_MASTER": "@flink_master@",
               "FLINK_CLASS": "com.dcos.demo.flink.MovingAverage"

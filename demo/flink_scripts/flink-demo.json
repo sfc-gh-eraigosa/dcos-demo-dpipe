@@ -1,0 +1,14 @@
+{
+  "service": {
+    "name": "demo-flink",
+    "slots": 5,
+    "parallelism-default": 2
+  },
+  "app-master": {
+    "cpus": 0.5
+  },
+  "task-managers": {
+    "count": 2,
+    "cpus": 1
+  }
+}
