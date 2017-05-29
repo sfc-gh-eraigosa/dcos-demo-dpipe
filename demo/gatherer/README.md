@@ -14,8 +14,7 @@ potential prediction of the future volatility of the next numbers.
 
 # Lets build it
 
-Use the build script if your working on adjusting the code or producing a new package.  If your not modifying the code, skip to installation to run all required
-flink jobs.
+Use the build script if your working on adjusting the code or producing a new package.  If your not modifying the code, skip to installation to run all required flink jobs. You can develop this code on [Intellij](../../docs/intellij.md) as well.
 
 ```
 bash ./build.sh
