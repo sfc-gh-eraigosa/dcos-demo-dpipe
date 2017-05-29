@@ -28,6 +28,8 @@ object MovingAverage {
       var properties: SetupArguments = new SetupArguments(args)
       System.out.println("Lets calculate the moving average")
       System.out.println(properties.toString())
+      System.out.printf("Consumer ==> %s\n",properties.getProperty("movingaverage.consumer"))
+      System.out.printf("Producer ==> %s\n",properties.getProperty("movingaverage.producer"))
 
       // get the execution environment
       val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
@@ -35,15 +37,15 @@ object MovingAverage {
           env.getConfig.setRestartStrategy(RestartStrategies.fixedDelayRestart(4, 10000))
           env.enableCheckpointing(5000) // create a checkpoint every 5 seconds
 
-      val consumer = new FlinkKafkaConsumer010[String]( properties.getProperty("consumer"), new SimpleStringSchema(), properties )
+      val consumer = new FlinkKafkaConsumer010[String]( properties.getProperty("movingaverage.consumer").toString, new SimpleStringSchema(), properties )
       val stream = env.addSource(consumer)
 
-      // write kafka stream to standard out.
+      // calculate moving average on sliding window
       val results = stream
         .map {
           s =>
             val a: Long = s.split("\\s").last.toLong;
-            new MovingAverageRecord(properties.getProperty("consumer"), a, List(a));
+            new MovingAverageRecord(properties.getProperty("movingaverage.consumer").toString, a, List(a));
         }
         .keyBy("label")
         .window(SlidingProcessingTimeWindows.of(Time.minutes(10),Time.seconds(10),Time.minutes(-10)))
@@ -56,7 +58,7 @@ object MovingAverage {
 
       // add a producer to place the moving average in
       val producer = new FlinkKafkaProducer09[String](
-        "movingaverage",
+        properties.getProperty("movingaverage.producer").toString,
         new SimpleStringSchema(),
         properties
       )
@@ -65,7 +67,7 @@ object MovingAverage {
       var kafka_results = results.map(_.toString())
       kafka_results.addSink(producer)
 
-      env.execute("Read from Kafka example")
+      env.execute("Run Moving Average Aggregation")
 
     } catch {
     case e: Exception =>
@@ -96,8 +98,8 @@ object MovingAverage {
       if (params.has("kafka_broker")) this.setProperty("bootstrap.servers", params.get("kafka_broker"))
       if (params.has("kafka_zookeeper")) this.setProperty("zookeeper.connect", params.get("kafka_zookeeper"))
       if (params.has("kafka_groupid")) this.setProperty("group.id", params.get("kafka_groupid"))
-      if (params.has("kafka_producer_topic")) this.setProperty("producer", params.get("kafka_producer_topic"))
-      if (params.has("kafka_consumer_topic")) this.setProperty("consumer", params.get("kafka_consumer_topic"))
+      if (params.has("kafka_producer_topic")) this.setProperty("movingaverage.producer", params.get("kafka_producer_topic"))
+      if (params.has("kafka_consumer_topic")) this.setProperty("movingaverage.consumer", params.get("kafka_consumer_topic"))
     }
 
     @throws[Exception]

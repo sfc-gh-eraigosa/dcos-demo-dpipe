@@ -34,4 +34,4 @@ function CreateTopics() {
     done
 }
 
-CreateTopics "London NYC SF Moscow Tokyo movingaverage"
+CreateTopics "London NYC SF Moscow Tokyo movingaverage volatility"

@@ -66,6 +66,19 @@ for topic in $topics; do
   dcos marathon app add "./.service-gatherer-${topic}.json"
 done
 
+echo "Deploying analytics services"
+topics="NYC London"
+for topic in $topics; do
+  cat ./service-volatility.json| \
+       sed 's#@topic_id@#'$(echo $topic|sed -e 's#\(.*\)#\L\1#g')'#g' | \
+       sed 's#@flink_master@#'$flink_rpc_address':'$flink_rpc_port'#g' | \
+       sed 's#@brokers@#'$brokers'#g' | \
+       sed 's#@zookeeper@#'$zookeeper'#g' | \
+       sed 's#@topic@#'$topic'#g' \
+       > "./.service-volatility-${topic}.json"
+  dcos marathon app add "./.service-volatility-${topic}.json"
+done
+
 echo "--> wait 2 minutes"
 sleep 120
 
