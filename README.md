@@ -1,5 +1,9 @@
 # Introduction
 
+This is a data pipeline demo project for learning how to work with components such as [Kafka](http://kafka.apache.org/), [Flink](http://flink.apache.org/) and [Marathon apps](https://dcos.io/docs/1.9/deploying-services/install/) on [DC/OS](https://dcos.io/) to analyze data.  We will setup the following demo environment:
+
+![DC/OS Data Pipeline Demo Environment](docs/images/dpipe_architecture.jpg)
+
 This is a simple demo for learning DC/OS custom installation and setup on local laptop.
 
 You can also find other cool vagrant and DC/OS demos here:
@@ -69,8 +73,3 @@ We can start with [this site](https://dcos.io/docs/1.9/installing/troubleshootin
 
 ## A real demo
 Now lets do a [real demo](demo/README.md)!
-
-# TODO cleanups
-
-* dig is not working correctly on genconf/ip-detect
-* passwordless script briks the sudoers command on macOS, investigate

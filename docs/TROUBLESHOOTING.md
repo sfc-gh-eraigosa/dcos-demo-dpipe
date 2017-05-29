@@ -3,6 +3,16 @@
 ## Reference sites
 - https://dcos.io/docs/1.9/installing/troubleshooting/
 
+## Subjects
+
+* [DC/OS](#dcos)
+* [Flink](#flink)
+* [Kafka](#kafka)
+* [Vagrant](#vagrant)
+* [General](#general)
+
+# dcos
+
 ## What are the available nodes in this project?
 
 You can find the viable nodes in the [Vagrantfile](../Vagrantfile), however
@@ -70,6 +80,54 @@ We can list all the running services on the master node with this command:
 dcos service
 ```
 
+## IPv4 forwarding is disabled errors
+
+   You might get an error as follows:
+
+   ```
+   vagrant@bootstrap dcos_install]$ sudo bash ./dcos_generate_config.sh --install-prereqs -v
+   WARNING: IPv4 forwarding is disabled. Networking will not work.
+   Logger set to DEBUG
+   ====> EXECUTING INSTALL PREREQUISITES
+   ====> START install_prereqs
+   ====> STAGE install_prereqs
+   ====> STAGE install_prereqs
+   ====> STAGE install_prereqs
+   ====> STAGE install_prereqs
+   ====> STAGE install_prereqs
+   ====> OUTPUT FOR install_prereqs
+   ====> 192.168.0.4:22 FAILED
+        TASK:
+   /usr/bin/ssh -oConnectTimeout=10 -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oBatchMode=yes -oPasswordAuthentication=no -p22 -i genconf/ssh_key -tt vagrant@192.168.0.4 echo INSTALL PREREQUISITES
+   ```
+
+   There is a workaround for this documented on [stack overflow](http://stackoverflow.com/questions/41453263/docker-networking-disabled-warning-ipv4-forwarding-is-disabled-networking-wil)
+
+   - edit `/etc/sysctl.conf` and add `net.ipv4.ip_forward=1`
+   - restar network services:
+     ```
+     systemctl restart network
+     sysctl net.ipv4.ip_forward
+     ```
+
+## Where is the page that generates the auth token?
+
+     The auth token page can be found here:
+
+       http://m1.dcos-demo/login?redirect_uri=urn:ietf:wg:oauth:2.0:oob
+
+# flink
+
+# If flink fails to start
+
+In the flink_scrips directory you can also find a flink-minimal.json configuration that can be used to verify that flink is functional from a startup perspective.  By default the demo will require approximately 2.5 cpus and 3G of memory to be offered from DC/OS.  To test the minimal configuration you can run the following command, in the `demo/flink_scripts` directory:
+
+```
+dcos package install flink --options=flink-minimal.json --yes
+```
+
+# kafka
+
 ## Working a kafka example
 
 If your worried about kafka working, trying doing the kafka example:
@@ -94,19 +152,6 @@ sudo docker run -it --rm mesosphere/kafka-client \
       --zookeeper master.mesos:2181/dcos-service-kafka \
       --topic fintrans --from-beginning
 ```
-
-## The url m1.dcos-demo doesn't come up in the browser
-
-This might be caused due to bad /etc/hosts file.
-
-Validate that `vagrant hostmanager` is able to run properly.  If errors
-   occur correct the entries in /etc/hosts and try `vagrant hostmanager` to correct all entries.
-
-## What urls should work after install?
-
-1. Exhibitor url : http://m1.dcos-demo:8181/exhibitor/v1/ui/index.html
-2. DC/OS dashboard: http://m1.dcos-demo/
-
 ## clean up kafka and all it's resources
 
 1. remove the kafka service:
@@ -118,50 +163,6 @@ dcos package uninstall kafka
 docker run mesosphere/janitor /janitor.py -r kafka-role -p kafka-principal -z dcos-service-kafka
 ```
 Also see [these docs](https://docs.mesosphere.com/1.9/deploying-services/uninstall/#framework-cleaner) for more details
-
-
-## IPv4 forwarding is disabled errors
-
-You might get an error as follows:
-
-```
-vagrant@bootstrap dcos_install]$ sudo bash ./dcos_generate_config.sh --install-prereqs -v
-WARNING: IPv4 forwarding is disabled. Networking will not work.
-Logger set to DEBUG
-====> EXECUTING INSTALL PREREQUISITES
-====> START install_prereqs
-====> STAGE install_prereqs
-====> STAGE install_prereqs
-====> STAGE install_prereqs
-====> STAGE install_prereqs
-====> STAGE install_prereqs
-====> OUTPUT FOR install_prereqs
-====> 192.168.0.4:22 FAILED
-     TASK:
-/usr/bin/ssh -oConnectTimeout=10 -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oBatchMode=yes -oPasswordAuthentication=no -p22 -i genconf/ssh_key -tt vagrant@192.168.0.4 echo INSTALL PREREQUISITES
-```
-
-There is a workaround for this documented on [stack overflow](http://stackoverflow.com/questions/41453263/docker-networking-disabled-warning-ipv4-forwarding-is-disabled-networking-wil)
-
-- edit `/etc/sysctl.conf` and add `net.ipv4.ip_forward=1`
-- restar network services:
-  ```
-  systemctl restart network
-  sysctl net.ipv4.ip_forward
-  ```
-
-## Where is the page that generates the auth token?
-
-The auth token page can be found here:
-
-  http://m1.dcos-demo/login?redirect_uri=urn:ietf:wg:oauth:2.0:oob
-
-## Starting netcat for flink wordcount streaming demo:
-If your doing the flink training demos and trying to learn how to use the wordcount demos, these can be started on your host as follows:
-```
-nc -l -p 40000 $(hostname)
-
-```
 
 # Recover broker after cluster restart
 
@@ -196,10 +197,25 @@ If your running a DC/OS environment on a small computer or laptop and you place 
 
    ```
 
-# If flink fails to start
+# vagrant
 
-In the flink_scrips directory you can also find a flink-minimal.json configuration that can be used to verify that flink is functional from a startup perspective.  By default the demo will require approximately 2.5 cpus and 3G of memory to be offered from DC/OS.  To test the minimal configuration you can run the following command, in the `demo/flink_scripts` directory:
+## The url m1.dcos-demo doesn't come up in the browser
 
+This might be caused due to bad /etc/hosts file.
+
+Validate that `vagrant hostmanager` is able to run properly.  If errors
+   occur correct the entries in /etc/hosts and try `vagrant hostmanager` to correct all entries.
+
+# general
+
+## What urls should work after install?
+
+1. Exhibitor url : http://m1.dcos-demo:8181/exhibitor/v1/ui/index.html
+2. DC/OS dashboard: http://m1.dcos-demo/
+
+## Starting netcat for flink wordcount streaming demo:
+If your doing the flink training demos and trying to learn how to use the wordcount demos, these can be started on your host as follows:
 ```
-dcos package install flink --options=flink-minimal.json --yes
+nc -l -p 40000 $(hostname)
+
 ```
