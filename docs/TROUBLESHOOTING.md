@@ -178,19 +178,24 @@ Also see [these docs](https://docs.mesosphere.com/1.9/deploying-services/uninsta
 If your running a DC/OS environment on a small computer or laptop and you place the computer to sleep.  After starting the system back up, kafka and brokers might remain down.  You can use the DC/OS marathon UI to restart the kafka services but the broker might still be down.  Use these steps to recover the broker:
 
 1. Verify the broker is still down:
+
    ```
    dcos kafka broker list    
     []
    ```
+
    Indicates there are no active brokers.
 2. Restart the broker:
+
    ```
    dcos kafka broker restart 0
    [
-  "broker-0__4d9aa712-969d-4be0-8874-726f4546beae"
+     "broker-0__4d9aa712-969d-4be0-8874-726f4546beae"
    ]
    ```
+
 3. Running kafka connection should verify the broker connection is available again.
+
    ```
    dcos kafka connection
     {
@@ -203,7 +208,6 @@ If your running a DC/OS environment on a small computer or laptop and you place 
       ],
       "vip": "broker.kafka.l4lb.thisdcos.directory:9092"
     }
-
    ```
 
 
@@ -215,7 +219,9 @@ If your running a DC/OS environment on a small computer or laptop and you place 
 2. DC/OS dashboard: http://m1.dcos-demo/
 
 ## Starting netcat for flink wordcount streaming demo:
+
 If your doing the flink training demos and trying to learn how to use the wordcount demos, these can be started on your host as follows:
+
 ```
 nc -l -p 40000 $(hostname)
 
