@@ -50,11 +50,12 @@ This should allow us to continue to deploy the data pipeline demo.
 
 The goals are simple.  Learn how to [deploy DC/OS](https://dcos.io/docs/1.9/installing/custom/) and manage a simple data pipeline.
 
-- We install docker only on the bootstrap node.
-- We configure an ssh key in the keys folder to allow for an ssh based deployment.
-- We install minimal packages on all nodes.
-- We generate the basic configuration file from the [genconf/config.yaml](genconf/config.yaml)
-- Finally we provide a data pipeline [demo](demo/README.md).
+The vagrant setup performed the following actions, now it's time to continue to the DC/OS deployment:
+
+- We installed docker only on the bootstrap node.
+- We configured the ssh key in the keys folder to allow for an ssh based deployment.
+- We installed minimal packages on all nodes.
+- We generated the basic configuration file from the [genconf/config.yaml](genconf/config.yaml)
 
 ## Manual DC/OS deployment
 
@@ -73,7 +74,8 @@ Once all these steps are complete, try accessing the DC/OS environment with a lo
 Tweak the Vagrantfile and genconf/config.yaml for other configurations.  For example, 3 masters, 1 agent, 1 public agent.
 
 ## A real demo
-Now lets do a [real demo](demo/README.md)!
+
+Now lets do a [the data pipeline demo](demo/README.md)!
 
 ## Trouble shoot
 
