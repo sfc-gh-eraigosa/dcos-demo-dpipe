@@ -5,13 +5,22 @@
 
 ## Subjects
 
-* [DC/OS](#dcos)
-* [Flink](#flink)
-* [Kafka](#kafka)
-* [Vagrant](#vagrant)
-* [General](#general)
+* [Vagrant](#VAGRANT)
+* [DC/OS](#DCOS)
+* [Flink](#FLINK)
+* [Kafka](#KAFKA)
+* [General](#GENERAL)
 
-# dcos
+# VAGRANT
+
+## The url m1.dcos-demo doesn't come up in the browser
+
+This might be caused due to bad /etc/hosts file.
+
+Validate that `vagrant hostmanager` is able to run properly.  If errors
+   occur correct the entries in /etc/hosts and try `vagrant hostmanager` to correct all entries.
+
+# DCOS
 
 ## What are the available nodes in this project?
 
@@ -116,7 +125,7 @@ dcos service
 
        http://m1.dcos-demo/login?redirect_uri=urn:ietf:wg:oauth:2.0:oob
 
-# flink
+# FLINK
 
 # If flink fails to start
 
@@ -126,7 +135,7 @@ In the flink_scrips directory you can also find a flink-minimal.json configurati
 dcos package install flink --options=flink-minimal.json --yes
 ```
 
-# kafka
+# KAFKA
 
 ## Working a kafka example
 
@@ -164,14 +173,14 @@ docker run mesosphere/janitor /janitor.py -r kafka-role -p kafka-principal -z dc
 ```
 Also see [these docs](https://docs.mesosphere.com/1.9/deploying-services/uninstall/#framework-cleaner) for more details
 
-# Recover broker after cluster restart
+## Recover broker after cluster restart
 
 If your running a DC/OS environment on a small computer or laptop and you place the computer to sleep.  After starting the system back up, kafka and brokers might remain down.  You can use the DC/OS marathon UI to restart the kafka services but the broker might still be down.  Use these steps to recover the broker:
 
 1. Verify the broker is still down:
    ```
    dcos kafka broker list    
-  []
+    []
    ```
    Indicates there are no active brokers.
 2. Restart the broker:
@@ -197,16 +206,8 @@ If your running a DC/OS environment on a small computer or laptop and you place 
 
    ```
 
-# vagrant
 
-## The url m1.dcos-demo doesn't come up in the browser
-
-This might be caused due to bad /etc/hosts file.
-
-Validate that `vagrant hostmanager` is able to run properly.  If errors
-   occur correct the entries in /etc/hosts and try `vagrant hostmanager` to correct all entries.
-
-# general
+# GENERAL
 
 ## What urls should work after install?
 
