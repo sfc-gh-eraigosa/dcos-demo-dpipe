@@ -38,9 +38,15 @@ You can also find other cool vagrant and DC/OS demos here:
 1. run vagrant up!  `vagrant up` in the root directory of this project.
 1. At this point, you might want to take snap shots of all VMs so that you can repeat the DC/OS deployment iteratively with different configurations.
 
-## What does this project do?
+## What have we done so far and whats next?
 
-- This project will setup 6 nodes for learning how to deploy DC/OS. 1 bootstrap, 1 master, 1 public agent and 3 private agents. Further we will deploy a sample data pipeline.
+At this point you should have setup 6 nodes for deploying DC/OS.
+ - 1 bootstrap for docker commands and DC/OS installation
+ - 1 master for DC/OS operations
+ - 1 public agent for application routing with Marathon LB
+ - 3 private agents for all component deployments
+
+This should allow us to continue to deploy the data pipeline demo.
 
 The goals are simple.  Learn how to [deploy DC/OS](https://dcos.io/docs/1.9/installing/custom/) and manage a simple data pipeline.
 
@@ -50,9 +56,9 @@ The goals are simple.  Learn how to [deploy DC/OS](https://dcos.io/docs/1.9/inst
 - We generate the basic configuration file from the [genconf/config.yaml](genconf/config.yaml)
 - Finally we provide a data pipeline [demo](demo/README.md).
 
-## How to use
+## Manual DC/OS deployment
 
-This is a manual install so we only prepared the minimum setup so that you can experience the steps for master and agents.
+We perform the installation manually to tune the DC/OS environment just right for the target laptop.  A minimum setup has been prepared, but adjustments might need to be made to the configuration.
 
 1. Connect to the bootstrap node: `vagrant ssh bootstrap.dcos-demo`
 2. Change to dcos_install folder : `cd /opt/dcos_install`
@@ -66,9 +72,9 @@ Once all these steps are complete, try accessing the DC/OS environment with a lo
 
 Tweak the Vagrantfile and genconf/config.yaml for other configurations.  For example, 3 masters, 1 agent, 1 public agent.
 
+## A real demo
+Now lets do a [real demo](demo/README.md)!
+
 ## Trouble shoot
 
 We can start with [this site](https://dcos.io/docs/1.9/installing/troubleshooting/), however lets provide some [specific help with the vagrant VMs](docs/TROUBLESHOOTING.md).
-
-## A real demo
-Now lets do a [real demo](demo/README.md)!
