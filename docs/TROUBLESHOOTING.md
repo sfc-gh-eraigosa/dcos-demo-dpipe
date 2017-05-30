@@ -164,13 +164,16 @@ sudo docker run -it --rm mesosphere/kafka-client \
 ## clean up kafka and all it's resources
 
 1. remove the kafka service:
-```
-dcos package uninstall kafka
-```
+   ```
+    dcos package uninstall kafka
+   ```
 2. login to the master node and remove all zookeeper resources:
-```
-docker run mesosphere/janitor /janitor.py -r kafka-role -p kafka-principal -z dcos-service-kafka
-```
+   ```
+    docker run mesosphere/janitor \
+           /janitor.py -r kafka-role \
+                       -p kafka-principal \
+                       -z dcos-service-kafka
+   ```
 Also see [these docs](https://docs.mesosphere.com/1.9/deploying-services/uninstall/#framework-cleaner) for more details
 
 ## Recover broker after cluster restart
