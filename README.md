@@ -37,6 +37,11 @@ You can also find other cool vagrant and DC/OS demos here:
    NOTE: These keys can not be encrypted, as the DC/OS installation will be using them for an unattended installation.
 1. run vagrant up!  `vagrant up` in the root directory of this project.
 1. At this point, you might want to take snap shots of all VMs so that you can repeat the DC/OS deployment iteratively with different configurations.
+   ```
+    for v in $(vagrant status|grep '.dcos-demo'|awk '{print $1}'); do
+      vagrant snapshot take $v base;
+    done
+   ```
 
 ## What have we done so far and whats next?
 
