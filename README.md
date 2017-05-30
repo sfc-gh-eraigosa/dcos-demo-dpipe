@@ -80,7 +80,7 @@ Tweak the Vagrantfile and genconf/config.yaml for other configurations.  For exa
 
 ## A real demo
 
-Now lets do a [the data pipeline demo](demo/README.md)!
+Now lets do [the data pipeline demo](demo/README.md)!
 
 ## Trouble shoot
 
