@@ -73,6 +73,7 @@ data and produce a new set of streaming data.
 - Having the ability to break up our data streams, consolidate them, and then further filter them gives us speed in being able to process and manage our overall data.
 - While the data generator was creating random data for us on several topics, we could use one service solution and DC/OS Marathon app to aggregate data across multiple private agents, Flink task managers, and Flink slots.  This could provide very flexible options to iterate and improve on aggregation data while not impacting overall quality of other data streams.
 - We used a filter on the `movingaverage` topic to remove non required data from the stream and only focus on certain data for transformation.  This could also be enhanced to pickup on anomalies in the data that might lead us to lower our overall confidence index and produce more accurate results.
+- Placing Flink jobs under DC/OS execution makes them resiliant to failure, and allows us to restart running jobs that were shutdown from node failures.
 
 
 Here are some additional things we could do next:
