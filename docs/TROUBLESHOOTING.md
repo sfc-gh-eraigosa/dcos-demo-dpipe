@@ -5,11 +5,11 @@
 
 ## Subjects
 
-* [Vagrant](#VAGRANT)
-* [DC/OS](#DCOS)
-* [Flink](#FLINK)
-* [Kafka](#KAFKA)
-* [General](#GENERAL)
+* [Vagrant](#vagrant)
+* [DC/OS](#dcos)
+* [Flink](#flink)
+* [Kafka](#kafka)
+* [General](#general)
 
 # VAGRANT
 
