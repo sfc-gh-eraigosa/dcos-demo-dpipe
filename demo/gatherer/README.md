@@ -50,6 +50,17 @@ nodes in the DC/OS cluster.  Lets run this on the master.
      ./kafka-console-consumer.sh --zookeeper 192.168.0.3:2181/dcos-service-kafka \
      --topic movingaverage
    ```
+3. Check the `volatility` topic to see what the current volatility is.  
+   ```
+    docker run -it --rm mesosphere/kafka-client \
+      ./kafka-console-consumer.sh --zookeeper 192.168.0.3:2181/dcos-service-kafka \
+      --topic volatility
+   ```
+
+   We can adjust the confidence index on the DC/OS Marathon app by adjusting the environment variable called `CONF_INDEX`.  The default is set in the `service-volatility.json` file.  This will allow the volatility to display
+   `high` or `low` based on what the current coefficient of variation is.  It's
+   nice to see that scheduling the analysis under DC/OS allows us to adjust
+   measurements without impacting other analysis tracking that is actively in progress.
 
 # Understanding the results
 
