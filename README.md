@@ -2,7 +2,7 @@
 
 This is a data pipeline demo project for learning how to work with components such as [Kafka](http://kafka.apache.org/), [Flink](http://flink.apache.org/) and [Marathon apps](https://dcos.io/docs/1.9/deploying-services/install/) on [DC/OS](https://dcos.io/) to analyze data.  We will setup the following demo environment:
 
-![DC/OS Data Pipeline Demo Environment](docs/images/dpipe_architecture.jpg)
+![DC/OS Data Pipeline Demo Environment](docs/images/dpipe_architecture.png)
 
 This is a simple demo for learning DC/OS custom installation and setup on local laptop.
 

@@ -1,4 +1,6 @@
-# gatherer and aggregate streaming data with flink
+# Gather, Aggregate, and Analyze streaming data with flink
+
+![Demo Pipeline Environment](../../docs/images/dpipe.png)
 
 The `gatherer` project contains a demo flink class that can be used and scheduled
 on flink to produce a moving average mean and standard deviation calculation
@@ -51,6 +53,8 @@ nodes in the DC/OS cluster.  Lets run this on the master.
 
 # Understanding the results
 
+## MovingAverage Class
+
 You might see output like the following if you have two flink jobs running on the `London` and `NYC` topics.
 
 ```
@@ -72,3 +76,31 @@ The columns each represent the following:
 - column 5 - The calculated mean of the sample size
 - column 6 - The standard deviation for the given sample size
 - column 7 - The coefficient of variation
+
+## Volatility Class
+
+The results of the MovingAverage jobs is collected in the `movingaverage` topic and stored analyzed by the Volatility jobs.  The results are placed in the `volatility` topic to be used.
+
+The data for `NYC` might look like the following:
+
+```
+London 2 51 5371 48.831757 low
+NYC 2 51 5317 54.468018 high
+London 2 51 5327 48.400185 low
+NYC 2 51 5337 54.407715 high
+London 2 51 5440 47.034096 low
+NYC 2 51 5378 53.472946 high
+NYC 2 51 5507 52.478664 high
+London 2 51 5573 45.85761 low
+NYC 2 51 5525 51.244358 high
+London 2 51 5514 47.025703 low
+NYC 2 51 5531 51.528267 high
+```
+
+The columns each represent the following:
+- column 1 - label from where the aggregated topic is produced from
+- column 2 - sample size for volatility window
+- column 3 - the confidence index (input)
+- column 4 - the average mean
+- column 5 - the average coefficient of variation
+- column 6 - the state of volatility, low < the current confidence index, high is >.

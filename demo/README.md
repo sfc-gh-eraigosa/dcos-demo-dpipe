@@ -52,6 +52,8 @@ institutions use complex data analytics to make daily decisions on financial pos
 We will use some simple standard deviation to show how we can use flink to aggregate
 price data over time and get a sense for volatility in a given set of data.
 
+![Demo Pipeline Environment](../docs/images/question.png)
+
 ** Can we determine moving volatility over time for a given set of positions to make buy or sell decisions? **
 
 Lets use the data generator topics as a way to provide us with the current price of
@@ -67,6 +69,11 @@ docker container to generate data. We installed flink to make it possible to pro
 a way to introduce a tool for working with streaming data.  We then setup our
 data aggregation project which helped us calculate a moving standard deviation on that
 data and produce a new set of streaming data.
+
+- Having the ability to break up our data streams, consolidate them, and then further filter them gives us speed in being able to process and manage our overall data.
+- While the data generator was creating random data for us on several topics, we could use one service solution and DC/OS Marathon app to aggregate data across multiple private agents, Flink task managers, and Flink slots.  This could provide very flexible options to iterate and improve on aggregation data while not impacting overall quality of other data streams.
+- We used a filter on the `movingaverage` topic to remove non required data from the stream and only focus on certain data for transformation.  This could also be enhanced to pickup on anomalies in the data that might lead us to lower our overall confidence index and produce more accurate results.
+
 
 Here are some additional things we could do next:
 
