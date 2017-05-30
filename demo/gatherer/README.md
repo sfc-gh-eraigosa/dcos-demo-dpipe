@@ -41,9 +41,9 @@ bash ./install.sh
 
 We can watch the results of the calculations on the `movingaerage` topic.
 This can be accomplished with the following docker command on one of the
-nodes in the DC/OS cluster.  Lets run this on the master.
+nodes in the DC/OS cluster.  Lets run this on the bootstrap node.
 
-1. Connect to the master node `vagrant ssh bootstrap.dcos-demo`
+1. Connect to the bootstrap node `vagrant ssh bootstrap.dcos-demo`
 2. Run a kafka client to consume the `movingaverage` topic.
    ```
    docker run -it --rm mesosphere/kafka-client \
