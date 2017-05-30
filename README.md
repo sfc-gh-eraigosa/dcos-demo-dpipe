@@ -4,7 +4,7 @@ This is a data pipeline demo project for learning how to work with components su
 
 ![DC/OS Data Pipeline Demo Environment](docs/images/dpipe_architecture.png)
 
-This is a simple demo for learning DC/OS custom installation and setup on local laptop.
+This demo was designed for running DC/OS and all required components on local laptop and not intended for production usage.
 
 You can also find other cool vagrant and DC/OS demos here:
 - https://github.com/dcos/dcos-vagrant.git
