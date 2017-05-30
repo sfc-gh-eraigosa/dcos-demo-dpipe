@@ -13,8 +13,7 @@ You can also find other cool vagrant and DC/OS demos here:
 ## Requirements
 
 1. You'll need [vagrant (recommend 1.9.4)](https://www.vagrantup.com/).
-2. Install [docker-machine to build the demo app](https://github.com/docker/machine/releases/tag/v0.11.0).  We'll be using the virtualbox driver to get a local docker client.
-3. You'll need a current docker client:  https://github.com/moby/moby/releases/tag/v1.13.1
+2. (Optional) All build steps can be performed on the bootstrap node, but you can also perform build steps on a local [docker engine](https://github.com/moby/moby/releases/tag/v1.13.1).  For example, install [docker-machine to build the demo app](https://github.com/docker/machine/releases/tag/v0.11.0).  
 3. A system with about ~16G of RAM, and 8 Cores.  This demo was built on macOS 10.12.3.  SSD drive is highly desirable.  An internet connection with 10 mBits / sec or better.
 
 ## Time Estimate
